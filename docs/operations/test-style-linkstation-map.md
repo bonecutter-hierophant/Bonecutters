@@ -11,8 +11,9 @@ Bonecutters uses stable public verification and stylesheet entrypoints that dele
 | Owner file | Coverage | Public command |
 |---|---|---|
 | `client/src/components/site-footer/tests/site-footer.test.mjs` | Public footer text and excluded private/deployment details | `npm run verify:test` |
-| `client/src/components/site-header/tests/site-header.test.mjs` | Public header semantics, brand composition, and approved contact link | `npm run verify:test` |
-| `client/src/pages/home/tests/home-page.test.mjs` | Home page fallback copy and header delegation | `npm run verify:test` |
+| `client/src/components/site-brand/tests/site-brand.test.mjs` | Brand link contract and approved logo asset usage | `npm run verify:test` |
+| `client/src/components/site-header/tests/site-header.test.mjs` | Public header semantics, brand composition, and launch section anchors | `npm run verify:test` |
+| `client/src/pages/home/tests/home-page.test.mjs` | Launch page content, persistent chrome delegation, public-safety exclusions | `npm run verify:test` |
 
 Coverage preservation rule: add or update tests in the nearest module-local `tests/` folder. Update this map in the same change when a new test owner is linked into a public test command.
 
@@ -23,7 +24,7 @@ Coverage preservation rule: add or update tests in the nearest module-local `tes
 | Owner file | Role |
 |---|---|
 | `client/src/design/foundations.css` | global variables, base element rules, and site foundations |
-| `client/src/pages/home/home-page.css` | Home page fallback layout and typography |
+| `client/src/pages/home/home-page.css` | Home page launch section layout and typography |
 | `client/src/components/site-brand/site-brand.css` | reusable Bonecutters brand link styles |
 | `client/src/components/site-header/site-header.css` | reusable public header and navigation layout |
 | `client/src/components/site-footer/site-footer.css` | reusable public footer layout |

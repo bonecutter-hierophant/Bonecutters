@@ -4,9 +4,13 @@ skinparam componentStyle rectangle
 
 component "SiteBrand.tsx" as SiteBrand
 component "site-brand.css" as Styles
+component "tests/site-brand.test.mjs" as Tests
 component "HomePage" as HomePage
+artifact "/bonecutters-logo.svg" as Logo
 
 HomePage --> SiteBrand : renders brand link
+SiteBrand --> Logo : decorative logo mark
 SiteBrand --> Styles : class contract
+Tests --> SiteBrand : verifies link and asset contract
 
 @enduml

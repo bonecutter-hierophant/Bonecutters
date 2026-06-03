@@ -4,13 +4,25 @@ skinparam componentStyle rectangle
 
 component "SiteHeader.tsx" as SiteHeader
 component "site-header.css" as Styles
+component "tests/site-header.test.mjs" as Tests
 component "SiteBrand" as SiteBrand
 component "HomePage" as HomePage
-cloud "Email Contact" as Email
+rectangle "Home Page Sections" as Sections {
+  component "#about" as About
+  component "#work" as Work
+  component "#writing" as Writing
+  component "#name" as Name
+  component "#contact" as Contact
+}
 
 HomePage --> SiteHeader : renders public header
 SiteHeader --> SiteBrand : brand link
 SiteHeader --> Styles : class contract
-SiteHeader --> Email : contact link
+SiteHeader --> About : anchor link
+SiteHeader --> Work : anchor link
+SiteHeader --> Writing : anchor link
+SiteHeader --> Name : anchor link
+SiteHeader --> Contact : anchor link
+Tests --> SiteHeader : verifies nav contract
 
 @enduml

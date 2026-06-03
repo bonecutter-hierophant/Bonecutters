@@ -1,9 +1,7 @@
 export function SiteBrand() {
   return (
     <a className="site-brand" href="/" aria-label="Bonecutters home">
-      <span className="site-brand__mark" aria-hidden="true">
-        B
-      </span>
+      <img className="site-brand__logo" src="/bonecutters-logo.svg" alt="" aria-hidden="true" />
       <span className="site-brand__text">Bonecutters</span>
     </a>
   );

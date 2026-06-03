@@ -6,10 +6,12 @@ Local diagram: `home-page.puml`.
 
 Responsibilities:
 
-- provide a safe fallback public homepage before the full PRD content pass
+- provide the launch-ready public homepage
 - introduce Jediah Blankenship and the Bonecutters domain
+- render About, Selected Work, Writing, About the Name, and Contact sections
 - expose LinkedIn, SimpleETL, and email links
-- keep the site professional if the first commit is inspected
+- expose CatapultCMS, Idea Fab Labs, and writing links
+- keep the site professional and public-repository safe
 - delegate branded navigation to `SiteHeader`
 - delegate persistent footer copy to `SiteFooter`
 
@@ -20,6 +22,9 @@ Inputs:
 - Web Awesome button primitives
 - LinkedIn URL
 - SimpleETL URL
+- CatapultCMS URL
+- Idea Fab Labs URL
+- LinkedIn article URL
 - contact mailto URL
 
 Outputs:
@@ -32,7 +37,7 @@ Contract rules:
 - this page should stay publicly safe and avoid private operational details
 - reusable header, footer, and branding belong to `client/src/components/site-header/`, `client/src/components/site-footer/`, and `client/src/components/site-brand/`
 - page layout and copy belong in this folder
-- full PRD sections should replace this fallback in a later content implementation pass
+- no private source document URLs, phone numbers, secrets, or deployment details belong in this page
 
 Verification:
 

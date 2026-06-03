@@ -4,11 +4,15 @@ skinparam componentStyle rectangle
 
 component "HomePage.tsx" as HomePage
 component "home-page.css" as Styles
+component "tests/home-page.test.mjs" as Tests
 component "SiteHeader" as SiteHeader
 component "SiteFooter" as SiteFooter
 component "Web Awesome Buttons" as WebAwesomeButtons
 cloud "LinkedIn Profile" as LinkedIn
 cloud "SimpleETL" as SimpleETL
+cloud "CatapultCMS" as CatapultCMS
+cloud "Idea Fab Labs" as IdeaFabLabs
+cloud "LinkedIn Article" as Writing
 cloud "Email Contact" as Email
 
 HomePage --> Styles : page class contract
@@ -17,12 +21,16 @@ HomePage --> SiteFooter : persistent footer
 HomePage --> WebAwesomeButtons : primary link primitives
 HomePage --> LinkedIn : profile link
 HomePage --> SimpleETL : project link
+HomePage --> CatapultCMS : work link
+HomePage --> IdeaFabLabs : work link
+HomePage --> Writing : article link
 HomePage --> Email : contact CTA
+Tests --> HomePage : verifies content and safety contract
 
 note right of HomePage
-The current page is a safe fallback before
-the full PRD section pass. Private operational
-or account details do not belong here.
+The page owns launch copy and section layout.
+Private source links, phone numbers, and
+deployment details do not belong here.
 end note
 
 @enduml

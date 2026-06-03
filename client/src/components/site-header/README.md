@@ -9,12 +9,12 @@ Responsibilities:
 - render the public `header` landmark
 - keep the primary navigation semantic and keyboard accessible
 - compose the reusable `SiteBrand`
-- expose the approved fallback contact link
+- expose the launch page section anchors
 
 Inputs:
 
 - `SiteBrand`
-- public contact mailto URL
+- launch page section ids: `about`, `work`, `writing`, `name`, and `contact`
 
 Outputs:
 
@@ -25,7 +25,7 @@ Contract rules:
 
 - page-specific layout and copy should stay with the page owner
 - navigation controls should use Web Awesome primitives when the interaction grows beyond plain text links
-- this component should not own page section navigation until the full PRD content pass adds those sections
+- this component owns only persistent labels and anchors, not section body copy
 
 Verification:
 

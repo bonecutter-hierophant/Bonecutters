@@ -1,18 +1,26 @@
 .site-header {
-  padding: 1.25rem var(--space-page) 0;
+  padding: 1.2rem var(--space-page) 0;
 }
 
 .site-header__nav {
   align-items: center;
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   justify-content: space-between;
   min-height: 4.5rem;
 }
 
+.site-header__links {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 1rem;
+  justify-content: flex-end;
+}
+
 .site-header__link {
   color: var(--color-ink);
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 0.25em;
@@ -22,5 +30,9 @@
   .site-header__nav {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .site-header__links {
+    justify-content: flex-start;
   }
 }
