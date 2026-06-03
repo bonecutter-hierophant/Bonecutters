@@ -1,0 +1,39 @@
+@startuml
+title Bonecutters S3 And CloudFront Hosting
+skinparam componentStyle rectangle
+
+actor "Owner" as Owner
+component "Provisioning access\nhuman-approved" as Provisioning
+component "Deployment access\nleast privilege" as DeployAccess
+component "client/dist" as Dist
+cloud "Private S3 bucket\nS3 REST origin" as S3
+component "CloudFront OAC" as OAC
+cloud "CloudFront distribution" as CloudFront
+component "ACM certificate\nus-east-1" as Cert
+cloud "www.bonecutters.us\ncanonical" as Www
+cloud "bonecutters.us\nredirect to www" as Root
+component "Config validator\nno AWS calls" as Validator
+
+Owner --> Provisioning : creates resources
+Owner --> DeployAccess : assumes for deploy
+Dist --> DeployAccess : upload source
+DeployAccess --> S3 : write static assets
+DeployAccess --> CloudFront : create invalidation
+CloudFront --> OAC : signs origin requests
+OAC --> S3 : private read access
+Cert --> CloudFront : viewer TLS
+Www --> CloudFront : public site
+Root --> CloudFront : redirect behavior
+Validator ..> DeployAccess : checks local names only
+
+note right of S3
+Block Public Access remains enabled where feasible.
+Do not use the S3 website endpoint for OAC.
+end note
+
+note bottom of DeployAccess
+Deployment access is separate from provisioning access
+and must not include SimpleETL resource permissions.
+end note
+
+@enduml

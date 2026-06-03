@@ -10,6 +10,7 @@ const gateDefinitions = new Map([
   ["dependency-layout", ["node", ["tools/check-dependency-layout.mjs"]]],
   ["public-sanitization", ["node", ["tools/check-public-sanitization.mjs"]]],
   ["test", ["node", ["tools/test-client.mjs"]]],
+  ["deployment-config", ["node", ["tools/test-deployment-config.mjs"]]],
   ["docs", ["node", ["tools/check-docs-whitespace.mjs"]]],
   ["client:typecheck", ["npm", ["--prefix", "client", "run", "typecheck"]]],
   ["client", ["npm", ["--prefix", "client", "run", "build"]]]
@@ -17,24 +18,25 @@ const gateDefinitions = new Map([
 
 const presets = new Map([
   ["docs", ["dependency-layout", "public-sanitization", "docs"]],
-  ["safe", ["dependency-layout", "public-sanitization", "test", "client:typecheck", "docs"]],
-  ["client", ["dependency-layout", "public-sanitization", "test", "client", "docs"]],
-  ["review", ["dependency-layout", "public-sanitization", "test", "client", "docs"]]
+  ["safe", ["dependency-layout", "public-sanitization", "test", "deployment-config", "client:typecheck", "docs"]],
+  ["client", ["dependency-layout", "public-sanitization", "test", "deployment-config", "client", "docs"]],
+  ["review", ["dependency-layout", "public-sanitization", "test", "deployment-config", "client", "docs"]]
 ]);
 
 const recommendationRules = [
   [/^README\.md$/, ["public-sanitization", "docs"]],
   [/^AGENTS\.md$/, ["public-sanitization", "docs"]],
   [/^\.gitignore$/, ["dependency-layout", "public-sanitization", "docs"]],
-  [/^package(-lock)?\.json$/, ["dependency-layout", "public-sanitization", "docs"]],
+  [/^package(-lock)?\.json$/, ["dependency-layout", "public-sanitization", "deployment-config", "docs"]],
   [/^client\/package(-lock)?\.json$/, ["dependency-layout", "public-sanitization", "client", "docs"]],
   [/^client\/index\.html$/, ["public-sanitization", "client", "docs"]],
   [/^client\/tsconfig\.json$/, ["public-sanitization", "client", "docs"]],
   [/^client\/vite\.config\.mjs$/, ["public-sanitization", "client", "docs"]],
   [/^client\/src\//, ["public-sanitization", "test", "client", "docs"]],
   [/^docs\/design\//, ["public-sanitization", "client", "docs"]],
+  [/^docs\/deployment\//, ["public-sanitization", "deployment-config", "docs"]],
   [/^docs\//, ["public-sanitization", "docs"]],
-  [/^tools\//, ["dependency-layout", "public-sanitization", "test", "docs"]]
+  [/^tools\//, ["dependency-layout", "public-sanitization", "test", "deployment-config", "docs"]]
 ];
 
 const args = process.argv.slice(2);

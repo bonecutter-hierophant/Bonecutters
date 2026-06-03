@@ -4,20 +4,26 @@ skinparam componentStyle rectangle
 
 actor "Owner" as Owner
 component "Bonecutters deploy role" as DeployRole
+component "Bonecutters provisioning access" as Provisioning
 component "client/dist" as Dist
-cloud "Bonecutters S3 bucket" as S3
+cloud "Bonecutters private S3 bucket\nREST origin" as S3
+component "CloudFront OAC" as OAC
 cloud "Bonecutters CloudFront distribution" as CloudFront
+component "ACM certificate\nus-east-1" as Certificate
 cloud "www.bonecutters.us" as Www
 cloud "bonecutters.us" as Root
 cloud "simpleetl.bonecutters.us" as SimpleEtl
 
-Owner --> DeployRole : assumes project-scoped access
+Owner --> Provisioning : human-approved setup
+Owner --> DeployRole : assumes project-scoped deploy access
 DeployRole --> S3 : publish static assets
 DeployRole --> CloudFront : invalidate cache
 Dist --> S3 : uploaded build output
-CloudFront --> S3 : private origin access
+CloudFront --> OAC : signs origin requests
+OAC --> S3 : private origin access
+Certificate --> CloudFront : viewer TLS
 Www --> CloudFront : canonical site
-Root --> Www : redirect or forward
+Root --> CloudFront : redirect to www
 
 note right of SimpleEtl
 SimpleETL remains a separate subdomain,

@@ -17,6 +17,7 @@ The safe lane runs:
 - `dependency-layout`
 - `public-sanitization`
 - `test`
+- `deployment-config`
 - `client:typecheck`
 - `docs`
 

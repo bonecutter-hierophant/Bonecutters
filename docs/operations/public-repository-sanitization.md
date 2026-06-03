@@ -9,7 +9,9 @@ Bonecutters is public. Treat every committed file as something a recruiter, hiri
 Do not commit:
 
 - secrets, tokens, private keys, OAuth credentials, or API keys
-- private AWS account identifiers, IAM credentials, live bucket names that should remain private, or billing details
+- private AWS account identifiers, IAM credentials, live bucket names, or billing details
+- live S3 bucket names, CloudFront distribution IDs, Route 53 hosted zone IDs, ARNs, local AWS profile names, or account aliases
+- generated IaC plans, state files, copied AWS CLI responses, deployment logs, or invalidation logs
 - customer data, private project context, HR/application-specific material, or role-specific resumes
 - phone numbers unless explicitly approved for public display
 - machine-local paths such as user profile directories

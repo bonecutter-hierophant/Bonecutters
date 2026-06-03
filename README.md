@@ -8,7 +8,7 @@ The site is intentionally small: a Vite/React client that builds to static files
 
 - Static client scaffold: In Progress
 - Documentation and PlantUML ownership pattern: In Progress
-- S3/CloudFront deployment workflow: Planned
+- S3/CloudFront deployment workflow: Proposal and local validation in progress
 
 ## Structure
 
@@ -21,6 +21,7 @@ The site is intentionally small: a Vite/React client that builds to static files
 |       +-- pages/          Page-owned UI with local docs
 +-- docs/
 |   +-- architecture/       Repo-level structure and diagram index
+|   +-- deployment/         Public-safe S3 and CloudFront deployment docs
 |   +-- design/             Frontend design and primitive rules
 |   +-- operations/         Workflow and verification process
 +-- tools/                  Repo-owned verification helpers
@@ -33,6 +34,7 @@ The site is intentionally small: a Vite/React client that builds to static files
 - Frontend design rules: `docs/design/frontend-design-rules.md`
 - Public repository sanitization: `docs/operations/public-repository-sanitization.md`
 - AWS deployment boundary: `docs/operations/aws-deployment-boundary.md`
+- Deployment setup: `docs/deployment/README.md`
 - Sandbox-safe verification: `docs/operations/sandbox-safe-verification.md`
 - Verification gates: `docs/operations/scoped-verification-gates.md`
 - Test/style linkstations: `docs/operations/test-style-linkstation-map.md`
@@ -80,6 +82,12 @@ Run the modular client test lane directly:
 
 ```text
 npm run verify:test
+```
+
+Check local deployment configuration without contacting AWS:
+
+```text
+npm run deploy:check
 ```
 
 Ask the repo to recommend gates for the current dirty tree when human-approved Git access is appropriate:

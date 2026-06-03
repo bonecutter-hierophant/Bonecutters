@@ -71,6 +71,17 @@ web_modules/
 .env.*
 !.env.example
 
+# Deployment and infrastructure state
+.terraform/
+*.tfstate
+*.tfstate.*
+cdk.out/
+*.plan
+*.tfplan
+deployment-*.json
+invalidation-*.json
+aws-output-*.json
+
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache

@@ -11,6 +11,7 @@ For sandbox-safe verification policy, read `docs/operations/sandbox-safe-verific
 - `dependency-layout`: checks package metadata and accidental self-links.
 - `public-sanitization`: scans tracked and untracked text files for common secrets, local user paths, and public-repo hygiene risks.
 - `test`: runs the modular client test linkstation.
+- `deployment-config`: tests the dry-run deployment configuration validator without contacting AWS.
 - `client:typecheck`: runs the React/TypeScript compiler without invoking Vite.
 - `client`: runs the Vite/React TypeScript build.
 - `docs`: scans workspace text files for trailing whitespace without requiring Git.
@@ -34,6 +35,7 @@ npm run verify:recommend:dirty
 ## Defaults
 
 - Documentation-only changes: `npm run verify:scoped dependency-layout,public-sanitization,docs`
+- Deployment documentation or tooling changes: `npm run verify:scoped dependency-layout,public-sanitization,deployment-config,docs`
 - Routine client UI changes while iterating: `npm run verify:safe`
 - Client UI closeout before commit: `npm run verify:scoped dependency-layout,public-sanitization,client,docs`
 - Tooling or package changes: `npm run verify:scoped dependency-layout,public-sanitization,client,docs`

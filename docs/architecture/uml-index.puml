@@ -17,6 +17,7 @@ package "Documentation" {
   component "client/src/components/site-header/site-header.puml" as SiteHeaderDoc
   component "client/src/components/site-footer/site-footer.puml" as SiteFooterDoc
   component "docs/architecture/hosted-boundary.puml" as HostedBoundaryDoc
+  component "docs/deployment/s3-cloudfront-hosting.puml" as DeploymentDoc
 }
 
 AppShellDoc --> AppShell
@@ -29,5 +30,6 @@ HomePage --> SiteHeader
 HomePage --> SiteFooter
 SiteHeader --> SiteBrand
 HostedBoundaryDoc --> AppShell : deployed static client
+DeploymentDoc --> HostedBoundaryDoc : details hosting shape
 
 @enduml

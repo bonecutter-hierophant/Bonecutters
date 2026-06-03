@@ -13,10 +13,13 @@
     "verify:client:typecheck": "npm --prefix client run typecheck",
     "verify:client": "npm --prefix client run build",
     "verify:docs": "node tools/check-docs-whitespace.mjs",
+    "verify:deployment-config": "node tools/test-deployment-config.mjs",
     "verify:scoped": "node tools/run-verification.mjs",
     "verify:safe": "node tools/run-verification.mjs preset:safe",
     "verify:list": "node tools/run-verification.mjs --list",
     "verify:recommend:dirty": "node tools/run-verification.mjs --recommend --dirty",
+    "deploy:check": "node tools/validate-deployment-config.mjs",
+    "deploy:validate": "node tools/validate-deployment-config.mjs --strict",
     "dev": "npm --prefix client run dev --",
     "build": "npm --prefix client run build"
   },
