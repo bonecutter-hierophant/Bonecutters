@@ -1,0 +1,34 @@
+@startuml
+title UI Primitive Wrapper Boundary
+skinparam componentStyle rectangle
+
+package "Web Awesome" {
+  component "Button" as WaButton
+  component "Card" as WaCard
+  component "Badge / Tag" as WaBadge
+  component "Callout" as WaCallout
+}
+
+package "Bonecutters UI" {
+  component "Thin wrappers when repeated" as UiWrappers
+}
+
+component "Pages" as Pages
+component "Reusable product components" as ProductComponents
+
+WaButton --> UiWrappers
+WaCard --> UiWrappers
+WaBadge --> UiWrappers
+WaCallout --> UiWrappers
+UiWrappers --> Pages
+UiWrappers --> ProductComponents
+WaButton --> Pages : direct use is allowed
+WaCard --> Pages : direct use is allowed
+
+note right of UiWrappers
+Create wrappers only when a site-level
+pattern repeats. Page layout and copy stay
+with the page owner.
+end note
+
+@enduml

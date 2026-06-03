@@ -1,0 +1,16 @@
+@startuml
+title Site Header Component
+skinparam componentStyle rectangle
+
+component "SiteHeader.tsx" as SiteHeader
+component "site-header.css" as Styles
+component "SiteBrand" as SiteBrand
+component "HomePage" as HomePage
+cloud "Email Contact" as Email
+
+HomePage --> SiteHeader : renders public header
+SiteHeader --> SiteBrand : brand link
+SiteHeader --> Styles : class contract
+SiteHeader --> Email : contact link
+
+@enduml

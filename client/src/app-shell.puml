@@ -1,0 +1,26 @@
+@startuml
+title Bonecutters Client App Shell
+skinparam componentStyle rectangle
+
+component "index.html" as IndexHtml
+component "main.tsx" as Main
+component "App.tsx" as App
+component "styles.css" as Styles
+component "HomePage" as HomePage
+cloud "S3 Static Files" as S3
+cloud "CloudFront" as CloudFront
+
+IndexHtml --> Main : loads module
+Main --> App : mounts React
+Main --> Styles : imports global stylesheet
+App --> HomePage : renders current public page
+S3 --> IndexHtml : serves built HTML
+CloudFront --> S3 : origin request
+
+note right of App
+The app shell stays intentionally narrow.
+Page-owned content and documentation live under pages/.
+Reusable component contracts live under components/.
+end note
+
+@enduml

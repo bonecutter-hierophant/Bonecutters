@@ -1,0 +1,18 @@
+@startuml
+title Site Footer Component
+skinparam componentStyle rectangle
+
+component "SiteFooter.tsx" as SiteFooter
+component "site-footer.css" as Styles
+component "HomePage" as HomePage
+
+HomePage --> SiteFooter : renders persistent footer
+SiteFooter --> Styles : class contract
+
+note right of SiteFooter
+Footer copy is safe public context.
+Private origin details, phone numbers,
+and deployment details do not belong here.
+end note
+
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+title Bonecutters Design Foundations
+skinparam componentStyle rectangle
+
+component "foundations.css" as Foundations
+component "styles.css" as GlobalStyles
+component "HomePage CSS" as HomePageCss
+component "SiteBrand CSS" as SiteBrandCss
+
+Foundations --> GlobalStyles : imported first
+GlobalStyles --> HomePageCss : page styles
+GlobalStyles --> SiteBrandCss : component styles
+HomePageCss --> Foundations : uses tokens
+SiteBrandCss --> Foundations : uses tokens
+
+@enduml

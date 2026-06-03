@@ -1,0 +1,31 @@
+@import "./design/foundations.css";
+@import "./pages/home/home-page.css";
+@import "./components/site-brand/site-brand.css";
+@import "./components/site-header/site-header.css";
+@import "./components/site-footer/site-footer.css";
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-page);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}

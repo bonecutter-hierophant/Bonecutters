@@ -1,0 +1,26 @@
+.site-header {
+  padding: 1.25rem var(--space-page) 0;
+}
+
+.site-header__nav {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  min-height: 4.5rem;
+}
+
+.site-header__link {
+  color: var(--color-ink);
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+@media (max-width: 640px) {
+  .site-header__nav {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

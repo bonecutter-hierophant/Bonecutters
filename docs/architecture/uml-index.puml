@@ -1,0 +1,33 @@
+@startuml
+title Bonecutters UML Index
+skinparam componentStyle rectangle
+
+package "Client" {
+  component "App Shell" as AppShell
+  component "Home Page" as HomePage
+  component "Site Brand" as SiteBrand
+  component "Site Header" as SiteHeader
+  component "Site Footer" as SiteFooter
+}
+
+package "Documentation" {
+  component "client/src/app-shell.puml" as AppShellDoc
+  component "client/src/pages/home/home-page.puml" as HomePageDoc
+  component "client/src/components/site-brand/site-brand.puml" as SiteBrandDoc
+  component "client/src/components/site-header/site-header.puml" as SiteHeaderDoc
+  component "client/src/components/site-footer/site-footer.puml" as SiteFooterDoc
+  component "docs/architecture/hosted-boundary.puml" as HostedBoundaryDoc
+}
+
+AppShellDoc --> AppShell
+HomePageDoc --> HomePage
+SiteBrandDoc --> SiteBrand
+SiteHeaderDoc --> SiteHeader
+SiteFooterDoc --> SiteFooter
+AppShell --> HomePage
+HomePage --> SiteHeader
+HomePage --> SiteFooter
+SiteHeader --> SiteBrand
+HostedBoundaryDoc --> AppShell : deployed static client
+
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+title Bonecutters Hosted Boundary
+skinparam componentStyle rectangle
+
+actor "Owner" as Owner
+component "Bonecutters deploy role" as DeployRole
+component "client/dist" as Dist
+cloud "Bonecutters S3 bucket" as S3
+cloud "Bonecutters CloudFront distribution" as CloudFront
+cloud "www.bonecutters.us" as Www
+cloud "bonecutters.us" as Root
+cloud "simpleetl.bonecutters.us" as SimpleEtl
+
+Owner --> DeployRole : assumes project-scoped access
+DeployRole --> S3 : publish static assets
+DeployRole --> CloudFront : invalidate cache
+Dist --> S3 : uploaded build output
+CloudFront --> S3 : private origin access
+Www --> CloudFront : canonical site
+Root --> Www : redirect or forward
+
+note right of SimpleEtl
+SimpleETL remains a separate subdomain,
+deployment boundary, and resource set.
+Bonecutters deployment must not reuse or
+mutate SimpleETL resources.
+end note
+
+@enduml

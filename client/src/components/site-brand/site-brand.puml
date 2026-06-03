@@ -1,0 +1,12 @@
+@startuml
+title Site Brand Component
+skinparam componentStyle rectangle
+
+component "SiteBrand.tsx" as SiteBrand
+component "site-brand.css" as Styles
+component "HomePage" as HomePage
+
+HomePage --> SiteBrand : renders brand link
+SiteBrand --> Styles : class contract
+
+@enduml
