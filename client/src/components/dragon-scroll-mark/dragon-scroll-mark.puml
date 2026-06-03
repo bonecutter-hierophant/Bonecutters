@@ -1,0 +1,28 @@
+@startuml
+title Dragon Scroll Mark Component
+skinparam componentStyle rectangle
+
+component "DragonScrollMark.tsx" as Component
+component "dragonCurve.ts" as Geometry
+component "dragon-scroll-mark.css" as Styles
+component "tests/dragon-scroll-mark.test.mjs" as Tests
+component "HomePage" as HomePage
+component "Media query state" as MediaQuery
+component "requestAnimationFrame" as AnimationFrame
+
+HomePage --> Component : renders decorative mark
+HomePage --> Component : finishSectionId
+Component --> Geometry : generates curve segments
+Component --> MediaQuery : desktop and reduced-motion guards
+Component --> AnimationFrame : coalesces scroll updates
+Component --> Styles : clipped desktop frame
+Tests --> Geometry : verifies segment counts
+Tests --> Component : verifies accessibility contract
+
+note right of Component
+The mark is decorative and aria-hidden.
+It is hidden on mobile and static for
+reduced-motion users.
+end note
+
+@enduml

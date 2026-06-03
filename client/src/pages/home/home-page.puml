@@ -7,6 +7,7 @@ component "home-page.css" as Styles
 component "tests/home-page.test.mjs" as Tests
 component "SiteHeader" as SiteHeader
 component "SiteFooter" as SiteFooter
+component "DragonScrollMark" as DragonScrollMark
 component "Web Awesome Buttons" as WebAwesomeButtons
 cloud "LinkedIn Profile" as LinkedIn
 cloud "SimpleETL" as SimpleETL
@@ -17,6 +18,7 @@ cloud "Email Contact" as Email
 
 HomePage --> Styles : page class contract
 HomePage --> SiteHeader : branded navigation
+HomePage --> DragonScrollMark : decorative scroll visual
 HomePage --> SiteFooter : persistent footer
 HomePage --> WebAwesomeButtons : primary link primitives
 HomePage --> LinkedIn : profile link

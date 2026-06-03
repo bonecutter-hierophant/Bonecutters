@@ -1,4 +1,5 @@
 @import "./design/foundations.css";
+@import "./components/dragon-scroll-mark/dragon-scroll-mark.css";
 @import "./pages/home/home-page.css";
 @import "./components/site-brand/site-brand.css";
 @import "./components/site-header/site-header.css";

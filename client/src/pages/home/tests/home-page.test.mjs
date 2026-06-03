@@ -11,7 +11,9 @@ export function registerHomePageTests(test) {
 
     assert.match(source, /import \{ SiteHeader \}/);
     assert.match(source, /import \{ SiteFooter \}/);
+    assert.match(source, /import \{ DragonScrollMark \}/);
     assert.match(source, /<SiteHeader \/>/);
+    assert.match(source, /<DragonScrollMark finishSectionId="name" \/>/);
     assert.match(source, /<SiteFooter \/>/);
     assert.doesNotMatch(source, /<nav className="home-page__nav"/);
     assert.doesNotMatch(source, /<footer className="home-page__footer"/);
@@ -55,5 +57,12 @@ export function registerHomePageTests(test) {
     assert.match(css, /\.home-page__copy\s*\{[^}]*max-width:\s*var\(--site-max-width\)/s);
     assert.match(css, /\.home-page__section-copy\s*\{[^}]*max-width:\s*var\(--site-max-width\)/s);
     assert.match(css, /margin-inline:\s*auto/);
+  });
+
+  test("home page lets the selected work band pass over decorative scroll art", () => {
+    const css = readFileSync(homePageCssPath, "utf8");
+
+    assert.match(css, /\.home-page__section\s*\{[^}]*position:\s*relative/s);
+    assert.match(css, /\.home-page__section--work\s*\{[^}]*z-index:\s*2/s);
   });
 }

@@ -1,5 +1,6 @@
 import WaButton from "@awesome.me/webawesome/dist/react/button/index.js";
 import WaButtonGroup from "@awesome.me/webawesome/dist/react/button-group/index.js";
+import { DragonScrollMark } from "../../components/dragon-scroll-mark/DragonScrollMark";
 import { SiteFooter } from "../../components/site-footer/SiteFooter";
 import { SiteHeader } from "../../components/site-header/SiteHeader";
 
@@ -36,6 +37,7 @@ export function HomePage() {
   return (
     <main className="home-page">
       <SiteHeader />
+      <DragonScrollMark finishSectionId="name" />
       <section className="home-page__hero" aria-labelledby="home-title">
         <div className="home-page__copy">
           <h1 id="home-title">Jediah Blankenship</h1>

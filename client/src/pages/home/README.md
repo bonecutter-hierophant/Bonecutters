@@ -9,6 +9,7 @@ Responsibilities:
 - provide the launch-ready public homepage
 - introduce Jediah Blankenship and the Bonecutters domain
 - render About, Selected Work, Writing, About the Name, and Contact sections
+- compose the experimental desktop-only dragon scroll mark
 - expose LinkedIn, SimpleETL, and email links
 - expose CatapultCMS, Idea Fab Labs, and writing links
 - keep the site professional and public-repository safe
@@ -20,6 +21,7 @@ Inputs:
 
 - reusable `SiteHeader`
 - reusable `SiteFooter`
+- experimental `DragonScrollMark`
 - Web Awesome button primitives
 - LinkedIn URL
 - SimpleETL URL
