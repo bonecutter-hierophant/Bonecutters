@@ -7,6 +7,8 @@ component "site-header.css" as Styles
 component "tests/site-header.test.mjs" as Tests
 component "SiteBrand" as SiteBrand
 component "HomePage" as HomePage
+component "Shared scroll threshold" as ScrollState
+component "Mobile menu state" as MenuState
 rectangle "Home Page Sections" as Sections {
   component "#about" as About
   component "#work" as Work
@@ -17,6 +19,8 @@ rectangle "Home Page Sections" as Sections {
 
 HomePage --> SiteHeader : renders public header
 SiteHeader --> SiteBrand : brand link
+SiteHeader --> ScrollState : shrinks logo and toggles chrome
+SiteHeader --> MenuState : opens and closes menu
 SiteHeader --> Styles : class contract
 SiteHeader --> About : anchor link
 SiteHeader --> Work : anchor link

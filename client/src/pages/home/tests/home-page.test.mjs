@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const homePagePath = fileURLToPath(new URL("../HomePage.tsx", import.meta.url));
+const homePageCssPath = fileURLToPath(new URL("../home-page.css", import.meta.url));
 
 export function registerHomePageTests(test) {
   test("home page delegates persistent chrome to shared components", () => {
@@ -45,5 +46,14 @@ export function registerHomePageTests(test) {
     assert.doesNotMatch(source, /phone/i);
     assert.doesNotMatch(source, /AWS|S3|CloudFront/);
     assert.doesNotMatch(source, /docs\.google|drive\.google/);
+  });
+
+  test("home page caps content containers while keeping section bands full bleed", () => {
+    const css = readFileSync(homePageCssPath, "utf8");
+
+    assert.doesNotMatch(css, /\.home-page\s*\{[^}]*max-width/s);
+    assert.match(css, /\.home-page__copy\s*\{[^}]*max-width:\s*var\(--site-max-width\)/s);
+    assert.match(css, /\.home-page__section-copy\s*\{[^}]*max-width:\s*var\(--site-max-width\)/s);
+    assert.match(css, /margin-inline:\s*auto/);
   });
 }

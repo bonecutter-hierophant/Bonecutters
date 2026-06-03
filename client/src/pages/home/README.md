@@ -12,6 +12,7 @@ Responsibilities:
 - expose LinkedIn, SimpleETL, and email links
 - expose CatapultCMS, Idea Fab Labs, and writing links
 - keep the site professional and public-repository safe
+- keep section backgrounds full bleed while content containers are capped for wide desktop viewports
 - delegate branded navigation to `SiteHeader`
 - delegate persistent footer copy to `SiteFooter`
 

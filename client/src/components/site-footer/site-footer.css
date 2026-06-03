@@ -3,10 +3,15 @@
   color: var(--color-muted);
   font-size: 0.95rem;
   line-height: 1.6;
+}
+
+.site-footer__inner {
+  margin-inline: auto;
+  max-width: var(--site-max-width);
   padding: 1.5rem var(--space-page) 2rem;
+  width: 100%;
 }
 
 .site-footer p {
   margin: 0;
-  max-width: 44rem;
 }

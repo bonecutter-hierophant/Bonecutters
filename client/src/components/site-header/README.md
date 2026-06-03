@@ -10,6 +10,9 @@ Responsibilities:
 - keep the primary navigation semantic and keyboard accessible
 - compose the reusable `SiteBrand`
 - expose the launch page section anchors
+- stay available at the top of the viewport while scrolling
+- expose a mobile hamburger menu with the same section anchors
+- compact the visible brand mark and apply scrolled header chrome at the same scroll threshold
 
 Inputs:
 
@@ -19,6 +22,8 @@ Inputs:
 Outputs:
 
 - branded top navigation for public pages
+- sticky header behavior for long-page reading
+- desktop and mobile navigation to the same page sections
 - module-local tests under `tests/` linked through `npm run verify:test`
 
 Contract rules:
@@ -26,6 +31,9 @@ Contract rules:
 - page-specific layout and copy should stay with the page owner
 - navigation controls should use Web Awesome primitives when the interaction grows beyond plain text links
 - this component owns only persistent labels and anchors, not section body copy
+- mobile menu state stays local to the header and closes after a link is selected
+- logo compaction and scrolled header chrome share one small hysteresis threshold because the header is sticky from the start
+- scroll state should only affect header presentation, not page routing
 
 Verification:
 

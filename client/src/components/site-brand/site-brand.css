@@ -7,8 +7,13 @@
 
 .site-brand__logo {
   display: block;
-  height: 12.8rem;
+  height: 8.5rem;
+  transition: height 180ms ease;
   width: auto;
+}
+
+.site-header--compact .site-brand__logo {
+  height: 4.75rem;
 }
 
 .site-brand__text {
@@ -25,6 +30,10 @@
 
 @media (max-width: 520px) {
   .site-brand__logo {
-    height: 7rem;
+    height: 4.75rem;
+  }
+
+  .site-header--compact .site-brand__logo {
+    height: 3.5rem;
   }
 }
