@@ -17,10 +17,20 @@ Bonecutters should be deployed as its own isolated static-site workload inside t
 
 - S3 bucket: one private bucket for the built `client/dist` assets.
 - CloudFront distribution: one distribution for `www.bonecutters.us`.
-- Root domain: redirect or forward `bonecutters.us` to `www.bonecutters.us`.
+- Root domain: redirect `bonecutters.us` to `www.bonecutters.us` through CloudFront.
 - Access control: use CloudFront Origin Access Control for the S3 origin, with S3 Block Public Access kept enabled where feasible.
 - IAM: create a Bonecutters-specific deployment role or IAM Identity Center permission set before any deployment.
 - Tags: apply a consistent project tag such as `Project=Bonecutters` to AWS resources.
+
+## Current Deployment State
+
+As of this document state, AWS resources have not been provisioned for Bonecutters. There is no project S3 bucket, CloudFront distribution, ACM certificate, or DNS cutover yet. The repository contains local deployment documentation and validation only.
+
+- [x] Local deployment documentation exists.
+- [x] Local deployment configuration validation exists.
+- [ ] Bonecutters AWS resources are provisioned.
+- [ ] Bonecutters static assets are deployed.
+- [ ] DNS points public hostnames at CloudFront.
 
 ## IAM Guidance
 
@@ -39,7 +49,7 @@ The deployment role should be scoped to Bonecutters resources only:
 - Use placeholders for account-specific values in documentation.
 - Keep deployment scripts project-local and named for Bonecutters.
 - Treat every AWS, DNS, S3, CloudFront, IAM, and deployment command as human-approved.
-- Run `npm run verify:scoped dependency-layout,public-sanitization,client,docs` before publishing deployment-related changes.
+- Run `npm run verify:scoped dependency-layout,public-sanitization,deployment-config,client,docs` before publishing deployment-related changes.
 - Review generated files before push; push means public.
 
 ## AWS References

@@ -4,6 +4,28 @@ This folder owns public-safe deployment documentation for the Bonecutters static
 
 Local diagram: `s3-cloudfront-hosting.puml`.
 
+## Current State
+
+The site is not online yet.
+
+Completed locally:
+
+- [x] Launch-ready static client content
+- [x] S3 and CloudFront hosting proposal
+- [x] Public-safe deployment documentation
+- [x] Local deployment configuration validator
+- [x] Verification gate for deployment config shape
+
+Not completed yet:
+
+- [ ] Bonecutters S3 bucket
+- [ ] CloudFront distribution
+- [ ] CloudFront Origin Access Control
+- [ ] ACM viewer certificate
+- [ ] Root-domain redirect behavior
+- [ ] First upload of `client/dist`
+- [ ] DNS pointing `www.bonecutters.us` or `bonecutters.us` at CloudFront
+
 ## V1 Hosting Shape
 
 Bonecutters builds `client/dist` and hosts it through a private S3 origin behind CloudFront.
@@ -83,3 +105,28 @@ These operations remain human-approved:
 - Git status, staging, commit, push, branch, and PR operations
 
 Local docs, tests, public sanitization, TypeScript checks, and deployment config validation can run without AWS access.
+
+## Go-Live Checklist
+
+Use this checklist when moving from local readiness to a real hosted site. AWS and DNS steps remain human-approved.
+
+- [ ] Confirm the working tree is clean enough for deployment-facing work.
+- [ ] Run `npm run verify:scoped dependency-layout,public-sanitization,deployment-config,client,docs`.
+- [ ] Create or choose a Bonecutters-scoped provisioning access path.
+- [ ] Create or choose a separate Bonecutters-scoped routine deployment role or permission set.
+- [ ] Create a Bonecutters-specific private S3 bucket for `client/dist` assets.
+- [ ] Keep S3 Block Public Access enabled where feasible.
+- [ ] Create an ACM viewer certificate in `us-east-1` covering `www.bonecutters.us` and `bonecutters.us`.
+- [ ] Create a Bonecutters-specific CloudFront distribution with the S3 REST origin.
+- [ ] Configure CloudFront Origin Access Control for the S3 origin.
+- [ ] Add the S3 bucket policy that allows only the Bonecutters CloudFront distribution to read objects.
+- [ ] Attach the public hostnames and ACM certificate to CloudFront.
+- [ ] Configure root-domain redirect behavior from `bonecutters.us` to `www.bonecutters.us`.
+- [ ] Set local deployment variables and run `npm run deploy:validate`.
+- [ ] Build the site with `npm run build`.
+- [ ] Upload `client/dist` assets to the Bonecutters S3 bucket using the approved deployment path.
+- [ ] Apply cache-control behavior for `index.html`, hashed assets, and root public assets.
+- [ ] Create a CloudFront invalidation for `/`, `/index.html`, and changed non-hashed root assets.
+- [ ] Test the CloudFront distribution URL directly.
+- [ ] Test `403` and `404` behavior so missing assets are not silently treated as successful page loads.
+- [ ] Point DNS for `www.bonecutters.us` and `bonecutters.us` at CloudFront to make the site live.

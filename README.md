@@ -6,9 +6,16 @@ The site is intentionally small: a Vite/React client that builds to static files
 
 ## Current Status
 
-- Static client scaffold: In Progress
-- Documentation and PlantUML ownership pattern: In Progress
-- S3/CloudFront deployment workflow: Proposal and local validation in progress
+- [x] Static client and launch content implemented locally
+- [x] Documentation and PlantUML ownership pattern established
+- [x] S3/CloudFront deployment workflow documented with local validation
+- [ ] Bonecutters S3 bucket created
+- [ ] CloudFront distribution created
+- [ ] ACM certificate configured
+- [ ] DNS pointed at CloudFront
+- [ ] Public deployment live
+
+No Bonecutters S3 bucket, CloudFront distribution, ACM certificate, or DNS cutover has been completed for this repository yet.
 
 ## Structure
 
@@ -107,3 +114,7 @@ npm run verify:scoped dependency-layout,public-sanitization,client,docs
 This repository is public. Do not commit secrets, private AWS account details, live provider credentials, customer data, or machine-local private context. Deployment docs should describe structure and placeholders without exposing sensitive values.
 
 Deployment should use Bonecutters-specific AWS resources and a Bonecutters-scoped deployment role. Do not reuse SimpleETL buckets, distributions, IAM roles, policies, or deployment scripts.
+
+## Go-Live Checklist
+
+The deployment checklist lives in `docs/deployment/README.md`. The final production step is pointing DNS for the public hostnames at the CloudFront distribution after the S3 origin, CloudFront configuration, TLS certificate, deployment validation, and first asset upload are complete.
