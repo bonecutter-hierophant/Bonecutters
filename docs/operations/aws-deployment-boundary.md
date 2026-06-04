@@ -31,6 +31,7 @@ As of this document state, V1 is live. The Bonecutters website AWS account conta
 - [x] Bonecutters AWS resources are provisioned for V1 hosting.
 - [x] Bonecutters static assets are deployed to the private origin bucket.
 - [x] Public DNS and forwarding route visitors to the CloudFront-backed site.
+- [x] Routine deploy and read-only verification lanes exist for day-to-day work.
 
 ## IAM Guidance
 
@@ -55,11 +56,17 @@ The provisioning role or permission set may need broader setup permissions while
 
 The read-only inspection lane should not be able to create, update, delete, upload, invalidate, or change DNS.
 
+The broad provisioning permission set should not be assigned for routine deployment or verification once the narrower lanes are available. Keep it available only for rare infrastructure changes that cannot be performed through the deploy or read-only lanes, and require management/admin reassignment before use.
+
+The normal deployment workflow is a human-approved command that uses the deploy lane, not the provisioning lane. It must validate that the active account matches local project configuration before uploading files or invalidating CloudFront.
+
 ## Deployment Rules
 
 - Do not add live account IDs, access keys, or secret values to docs, scripts, `.env` files, or examples.
 - Do not add live bucket names, CloudFront distribution IDs, hosted zone IDs, ARNs, account aliases, or local AWS profile names to committed docs.
 - Use placeholders for account-specific and machine-local values in documentation.
+- Keep real project connection details in `.local/` or another ignored operator-local location.
+- Keep routine deployment remote deletion disabled by default; require an explicit operator choice for deletion.
 - Keep deployment scripts project-local and named for Bonecutters.
 - Treat every AWS, DNS, S3, CloudFront, IAM, and deployment command as human-approved.
 - Run `npm run verify:scoped dependency-layout,public-sanitization,deployment-config,client,docs` before publishing deployment-related changes.

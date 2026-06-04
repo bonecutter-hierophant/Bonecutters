@@ -1,0 +1,25 @@
+@startuml
+title Bonecutters Tools
+skinparam componentStyle rectangle
+
+component "run-verification.mjs" as Verification
+component "test-client.mjs" as ClientTests
+component "validate-deployment-config.mjs" as DeploymentConfig
+component "aws-lane.mjs" as AwsLane
+component "deploy-aws.mjs" as DeployAws
+database ".local/aws-project.json\n(ignored)" as LocalConfig
+component "AWS CLI\n(human-approved)" as AwsCli
+
+Verification --> ClientTests : runs test gate
+Verification --> DeploymentConfig : runs deployment-config gate
+AwsLane --> LocalConfig : reads local lane values
+AwsLane --> AwsCli : identity checks by profile
+DeployAws --> LocalConfig : reads deploy lane
+DeployAws --> AwsCli : uploads and invalidates
+
+note right of LocalConfig
+Contains real local AWS values.
+Ignored by Git and never committed.
+end note
+
+@enduml

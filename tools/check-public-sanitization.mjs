@@ -5,9 +5,11 @@ import { fileURLToPath } from "node:url";
 
 const repoRoot = fileURLToPath(new URL("..", import.meta.url));
 const failures = [];
+const gitIndexPath = join(repoRoot, ".git", "index");
 
 const excludedPathPatterns = [
   /^\.git\//,
+  /^\.local\//,
   /^\.tmp\//,
   /^client\/dist\//,
   /^client\/node_modules\//,
@@ -60,6 +62,7 @@ const denyPatterns = [
 ];
 
 const paths = readRepoPaths();
+checkGitIndex();
 
 for (const filePath of paths) {
   if (shouldSkip(filePath)) {
@@ -117,6 +120,19 @@ function checkContent(filePath, content) {
       failures.push(`${filePath}:${line} matched ${name}`);
       match = pattern.exec(content);
     }
+  }
+}
+
+function checkGitIndex() {
+  const stat = statSync(gitIndexPath, { throwIfNoEntry: false });
+  if (stat === undefined || !stat.isFile()) {
+    return;
+  }
+
+  const gitIndex = readFileSync(gitIndexPath, { flag: "r" });
+
+  if (gitIndex.includes(Buffer.from(".local/"))) {
+    failures.push(".local/ appears in the Git index. Remove tracked local AWS helper files before committing.");
   }
 }
 

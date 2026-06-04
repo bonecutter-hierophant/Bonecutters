@@ -25,7 +25,6 @@ Completed for V1:
 
 Not completed yet:
 
-- [ ] Create a narrower routine deployment role or permission set for future deploys.
 - [ ] Move root-domain DNS to an apex alias provider if direct CloudFront-backed root hosting becomes preferable to registrar forwarding.
 
 ## V1 Hosting Shape
@@ -63,6 +62,66 @@ Prepare three credential lanes where feasible:
 Use IAM Identity Center, role assumption, or another temporary-credential flow where feasible. Avoid long-lived access keys for this project unless a later workflow explicitly approves and documents the exception.
 
 Before any AWS resource creation, verify the active identity locally with the intended profile and confirm it is not using a SimpleETL role, bucket, distribution, script, or state path.
+
+V1 has separate routine deployment and read-only verification lanes. The broad provisioning permission set remains available for rare infrastructure changes, but it is not assigned for routine work.
+
+## Local AWS Lane Helper
+
+The repo includes a public-safe helper:
+
+```text
+npm run aws:lane -- list
+npm run aws:lane -- readonly check
+npm run aws:lane -- deploy check
+npm run deploy:aws
+```
+
+The helper reads real local values from `.local/aws-project.json`. The `.local/` folder is ignored by Git and must not be committed.
+
+Use this placeholder shape when creating the local file:
+
+```json
+{
+  "project": "Bonecutters Website",
+  "accountId": "<aws-account-id>",
+  "workloadRegion": "us-west-1",
+  "acmRegion": "us-east-1",
+  "ssoRegion": "<identity-center-region>",
+  "hosts": {
+    "canonical": "www.bonecutters.us",
+    "root": "bonecutters.us"
+  },
+  "resources": {
+    "s3Bucket": "<bonecutters-website-bucket>",
+    "cloudFrontDistributionId": "<bonecutters-cloudfront-distribution-id>"
+  },
+  "lanes": {
+    "deploy": {
+      "profile": "<bonecutters-deploy-profile>",
+      "region": "us-west-1",
+      "purpose": "Upload static assets and create CloudFront invalidations."
+    },
+    "readonly": {
+      "profile": "<bonecutters-readonly-profile>",
+      "region": "us-west-1",
+      "purpose": "Inspect hosted website state without mutation."
+    },
+    "provisioning": {
+      "profile": "<bonecutters-provisioning-profile>",
+      "region": "us-west-1",
+      "purpose": "Rare infrastructure changes only; normally unassigned."
+    }
+  }
+}
+```
+
+Do not paste local helper output that includes live AWS values into public docs, commits, or issue threads.
+
+`npm run aws:lane -- <lane> deploy-env` prints placeholder values by default. Use `--show-values` only in a local terminal when you intentionally need shell assignments with real values.
+
+`npm run deploy:aws` is the normal human-approved deployment lane. It uses the configured deploy profile from `.local/aws-project.json`, confirms that the active account matches local project configuration, builds the static client, uploads `client/dist`, and invalidates CloudFront entry/root assets. If the deploy profile session is expired, refresh the normal AWS sign-in session for that profile, then rerun the command.
+
+Remote deletion is disabled by default. Use `npm run deploy:aws -- --delete-assets` only when intentionally removing replaced hashed assets from the private origin bucket.
 
 ## Routing And Errors
 
@@ -129,9 +188,9 @@ Use this checklist when moving from local readiness to a real hosted site. AWS a
 - [ ] Confirm the working tree is clean enough for deployment-facing work.
 - [ ] Run `npm run verify:scoped dependency-layout,public-sanitization,deployment-config,client,docs`.
 - [ ] Create or choose a Bonecutters-scoped provisioning access path.
-- [ ] Create or choose a separate Bonecutters-scoped routine deployment role or permission set.
-- [ ] Optionally create or choose a Bonecutters-scoped read-only inspection path.
-- [ ] Confirm local AWS access uses Bonecutters lanes and not SimpleETL lanes.
+- [x] Create or choose a separate Bonecutters-scoped routine deployment role or permission set.
+- [x] Create or choose a Bonecutters-scoped read-only inspection path.
+- [x] Confirm local AWS access uses Bonecutters lanes and not SimpleETL lanes.
 - [x] Create a Bonecutters-specific private S3 bucket for `client/dist` assets.
 - [x] Keep S3 Block Public Access enabled where feasible.
 - [x] Request an ACM viewer certificate in `us-east-1` covering `www.bonecutters.us` and `bonecutters.us`.
@@ -152,3 +211,8 @@ Use this checklist when moving from local readiness to a real hosted site. AWS a
 - [x] Point `www.bonecutters.us` at CloudFront.
 - [x] Configure root-domain forwarding to the canonical `www` host.
 - [x] Confirm the public site is live.
+- [x] Verify the read-only lane cannot create CloudFront invalidations.
+- [x] Verify the deploy lane can create CloudFront invalidations.
+- [x] Verify the deploy lane can write and remove private S3 deployment objects.
+- [x] Verify the read-only lane cannot write private S3 deployment objects.
+- [x] Unassign the broad provisioning lane from routine project work while leaving it available for admin reassignment.

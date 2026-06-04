@@ -20,6 +20,8 @@
     "verify:recommend:dirty": "node tools/run-verification.mjs --recommend --dirty",
     "deploy:check": "node tools/validate-deployment-config.mjs",
     "deploy:validate": "node tools/validate-deployment-config.mjs --strict",
+    "deploy:aws": "node tools/deploy-aws.mjs",
+    "aws:lane": "node tools/aws-lane.mjs",
     "dev": "npm --prefix client run dev --",
     "build": "npm --prefix client run build"
   },

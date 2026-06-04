@@ -17,6 +17,7 @@ Do not commit:
 - machine-local paths such as user profile directories
 - private Bonecutters origin details excluded by the PRD
 - generated scratch output, logs, local caches, `node_modules`, or build output
+- `.local/` project connection files or other ignored operator-local AWS helper configuration
 
 ## Required Checks
 

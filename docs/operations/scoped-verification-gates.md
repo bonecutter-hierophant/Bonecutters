@@ -12,6 +12,7 @@ For sandbox-safe verification policy, read `docs/operations/sandbox-safe-verific
 - `public-sanitization`: scans tracked and untracked text files for common secrets, local user paths, and public-repo hygiene risks.
 - `test`: runs the modular client test linkstation.
 - `deployment-config`: tests the dry-run deployment configuration validator without contacting AWS.
+- `aws:lane` is not a verification gate; it is a human-approved local helper for checking configured AWS lanes.
 - `client:typecheck`: runs the React/TypeScript compiler without invoking Vite.
 - `client`: runs the Vite/React TypeScript build.
 - `docs`: scans workspace text files for trailing whitespace without requiring Git.
