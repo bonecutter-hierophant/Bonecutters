@@ -28,17 +28,23 @@ export function registerDragonScrollMarkTests(test) {
     assert.match(source, /document\.getElementById\(finishSectionId\)/);
     assert.match(source, /window\.matchMedia\(desktopQuery\)/);
     assert.match(source, /window\.matchMedia\(reducedMotionQuery\)/);
-    assert.match(source, /if \(!canAnimate\)/);
+    assert.match(source, /setIsDesktop\(desktop\.matches\)/);
+    assert.match(source, /setPrefersReducedMotion\(reducedMotion\.matches\)/);
+    assert.match(source, /if \(!isDesktop \|\| prefersReducedMotion\)/);
+    assert.match(source, /if \(!isDesktop\)/);
+    assert.match(source, /const markProgress = prefersReducedMotion \? 1 : progress/);
+    assert.match(source, /prefersReducedMotion \? segments\.length : visibleSegmentCount/);
     assert.match(source, /window\.requestAnimationFrame/);
-    assert.match(source, /visibleDragonOrder\(segments\.length, progress\)/);
+    assert.match(source, /prefersReducedMotion \? MAX_DRAGON_ORDER : visibleDragonOrder/);
     assert.match(source, /14 \/ Math\.pow\(2, \(visibleOrder - 1\) \/ 1\.25\)/);
     assert.match(source, /const revealRotationProgress = \(revealedSegments - 2\) \/ \(segments\.length - 2\)/);
-    assert.match(source, /const rotationProgress = \(progress \+ revealRotationProgress\) \/ 2/);
+    assert.match(source, /const rotationProgress = \(markProgress \+ revealRotationProgress\) \/ 2/);
     assert.match(source, /const rotation = 135 \+ rotationProgress \* 180/);
     assert.match(source, /translate\(\$\{targetX\} \$\{targetY\}\) rotate/);
-    assert.match(source, /const frameSize = 250 \+ progress \* 170/);
-    assert.match(source, /progress > 0\.78/);
-    assert.match(source, /const targetY = 56 - progress \* 71/);
+    assert.match(source, /const frameSize = 250 \+ markProgress \* 170/);
+    assert.match(source, /markProgress > 0\.78/);
+    assert.match(source, /const targetY = 56 - markProgress \* 71/);
+    assert.match(source, /dragon-scroll-mark--static/);
     assert.match(source, /height:\s*`\$\{frameSize\}px`/);
     assert.match(source, /width:\s*`\$\{frameSize\}px`/);
     assert.match(source, /opacity=\{index < revealedSegments \? 1 : 0\}/);
@@ -59,5 +65,8 @@ export function registerDragonScrollMarkTests(test) {
     assert.match(css, /stroke-width:\s*1\.5/);
     assert.match(css, /vector-effect:\s*non-scaling-stroke/);
     assert.match(css, /prefers-reduced-motion:\s*reduce/);
+    assert.match(css, /\.dragon-scroll-mark--static\s*\{[^}]*opacity:\s*0\.32/s);
+    assert.match(css, /@media \(prefers-reduced-motion:\s*reduce\) and \(min-width:\s*1060px\)/);
+    assert.doesNotMatch(css, /transform:\s*rotate\(0deg\) scale\(1\) !important/);
   });
 }

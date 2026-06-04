@@ -1,20 +1,13 @@
 .site-header {
-  background: color-mix(in srgb, var(--color-page) 94%, transparent);
-  border-bottom: 1px solid transparent;
+  --site-header-expanded-height: 9.125rem;
+
+  background: transparent;
+  min-height: var(--site-header-expanded-height);
   padding: 0;
+  pointer-events: none;
   position: sticky;
   top: 0;
-  transition:
-    background-color 180ms ease,
-    border-color 180ms ease,
-    box-shadow 180ms ease;
   z-index: 20;
-}
-
-.site-header--scrolled {
-  background: color-mix(in srgb, var(--color-page) 98%, transparent);
-  border-bottom-color: var(--color-rule);
-  box-shadow: 0 0.5rem 2rem rgb(21 20 20 / 8%);
 }
 
 .site-header__nav {
@@ -25,8 +18,34 @@
   margin-inline: auto;
   max-width: var(--site-max-width);
   min-height: 5rem;
+  padding-block: 0.625rem;
   padding-inline: var(--space-page);
+  pointer-events: auto;
+  position: relative;
   width: 100%;
+  z-index: 0;
+}
+
+.site-header__nav::before {
+  background: color-mix(in srgb, var(--color-page) 94%, transparent);
+  border-bottom: 1px solid transparent;
+  content: "";
+  inset-block: 0;
+  inset-inline-start: 50%;
+  position: absolute;
+  transform: translateX(-50%);
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+  width: 100vw;
+  z-index: -1;
+}
+
+.site-header--scrolled .site-header__nav::before {
+  background: color-mix(in srgb, var(--color-page) 98%, transparent);
+  border-bottom-color: var(--color-rule);
+  box-shadow: 0 0.5rem 2rem rgb(21 20 20 / 8%);
 }
 
 .site-header__links {
@@ -68,6 +87,10 @@
 }
 
 @media (max-width: 640px) {
+  .site-header {
+    --site-header-expanded-height: 5.45rem;
+  }
+
   .site-header__nav {
     align-items: center;
     flex-wrap: wrap;

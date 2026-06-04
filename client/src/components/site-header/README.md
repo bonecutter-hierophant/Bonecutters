@@ -32,7 +32,9 @@ Contract rules:
 - navigation controls should use Web Awesome primitives when the interaction grows beyond plain text links
 - this component owns only persistent labels and anchors, not section body copy
 - mobile menu state stays local to the header and closes after a link is selected
-- logo compaction and scrolled header chrome share one small hysteresis threshold because the header is sticky from the start
+- logo compaction and scrolled header chrome share one small hysteresis threshold
+- the outer sticky header reserves the expanded header height while the inner nav owns the visible background band
+- scroll state should not change the sticky header's layout height
 - scroll state should only affect header presentation, not page routing
 
 Verification:

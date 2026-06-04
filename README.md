@@ -9,13 +9,13 @@ The site is intentionally small: a Vite/React client that builds to static files
 - [x] Static client and launch content implemented locally
 - [x] Documentation and PlantUML ownership pattern established
 - [x] S3/CloudFront deployment workflow documented with local validation
-- [ ] Bonecutters S3 bucket created
-- [ ] CloudFront distribution created
-- [ ] ACM certificate configured
+- [x] Bonecutters S3 bucket created
+- [x] CloudFront distribution created
+- [x] ACM certificate configured
 - [ ] DNS pointed at CloudFront
 - [ ] Public deployment live
 
-No Bonecutters S3 bucket, CloudFront distribution, ACM certificate, or DNS cutover has been completed for this repository yet.
+The Bonecutters website AWS account now contains a project-specific private S3 origin bucket, issued ACM certificate, CloudFront Origin Access Control, CloudFront distribution, and first uploaded static build. DNS cutover has not been completed yet.
 
 ## Structure
 

@@ -11,14 +11,16 @@ const reducedMotionQuery = "(prefers-reduced-motion: reduce)";
 export function DragonScrollMark({ finishSectionId = "name" }: DragonScrollMarkProps) {
   const segments = useMemo(() => generateDragonSegments(MAX_DRAGON_ORDER), []);
   const [progress, setProgress] = useState(0);
-  const [canAnimate, setCanAnimate] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
     const desktop = window.matchMedia(desktopQuery);
     const reducedMotion = window.matchMedia(reducedMotionQuery);
 
     const updateAnimationEligibility = () => {
-      setCanAnimate(desktop.matches && !reducedMotion.matches);
+      setIsDesktop(desktop.matches);
+      setPrefersReducedMotion(reducedMotion.matches);
     };
 
     updateAnimationEligibility();
@@ -32,7 +34,7 @@ export function DragonScrollMark({ finishSectionId = "name" }: DragonScrollMarkP
   }, []);
 
   useEffect(() => {
-    if (!canAnimate) {
+    if (!isDesktop || prefersReducedMotion) {
       return undefined;
     }
 
@@ -69,27 +71,32 @@ export function DragonScrollMark({ finishSectionId = "name" }: DragonScrollMarkP
       window.removeEventListener("scroll", scheduleProgressUpdate);
       window.removeEventListener("resize", scheduleProgressUpdate);
     };
-  }, [canAnimate, finishSectionId]);
+  }, [isDesktop, prefersReducedMotion, finishSectionId]);
 
-  if (!canAnimate) {
+  if (!isDesktop) {
     return null;
   }
 
-  const revealedSegments = visibleSegmentCount(segments.length, progress);
-  const visibleOrder = visibleDragonOrder(segments.length, progress);
+  const markProgress = prefersReducedMotion ? 1 : progress;
+  const revealedSegments = prefersReducedMotion ? segments.length : visibleSegmentCount(segments.length, markProgress);
+  const visibleOrder = prefersReducedMotion ? MAX_DRAGON_ORDER : visibleDragonOrder(segments.length, markProgress);
   const scale = Math.max(1, 14 / Math.pow(2, (visibleOrder - 1) / 1.25));
   const revealRotationProgress = (revealedSegments - 2) / (segments.length - 2);
-  const rotationProgress = (progress + revealRotationProgress) / 2;
+  const rotationProgress = (markProgress + revealRotationProgress) / 2;
   const rotation = 135 + rotationProgress * 180;
   const anchor = segments[0];
-  const targetX = -11 + progress * 11;
-  const targetY = 56 - progress * 71;
+  const targetX = -11 + markProgress * 11;
+  const targetY = 56 - markProgress * 71;
   const transform = `translate(${targetX} ${targetY}) rotate(${rotation}) scale(${scale}) translate(${-anchor.x1} ${-anchor.y1})`;
-  const frameSize = 250 + progress * 170;
+  const frameSize = 250 + markProgress * 170;
 
   return (
     <aside
-      className={`dragon-scroll-mark${progress > 0.78 ? " dragon-scroll-mark--unclipped" : ""}`}
+      className={[
+        "dragon-scroll-mark",
+        markProgress > 0.78 ? "dragon-scroll-mark--unclipped" : "",
+        prefersReducedMotion ? "dragon-scroll-mark--static" : "",
+      ].filter(Boolean).join(" ")}
       aria-hidden="true"
       style={{
         height: `${frameSize}px`,

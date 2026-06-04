@@ -24,29 +24,42 @@ Bonecutters should be deployed as its own isolated static-site workload inside t
 
 ## Current Deployment State
 
-As of this document state, AWS resources have not been provisioned for Bonecutters. There is no project S3 bucket, CloudFront distribution, ACM certificate, or DNS cutover yet. The repository contains local deployment documentation and validation only.
+As of this document state, the Bonecutters website AWS account contains a project-specific private S3 origin bucket, issued ACM certificate, CloudFront Origin Access Control, CloudFront distribution, and first uploaded static build. DNS cutover has not been completed yet. The repository contains public-safe deployment documentation and local validation only.
 
 - [x] Local deployment documentation exists.
 - [x] Local deployment configuration validation exists.
-- [ ] Bonecutters AWS resources are provisioned.
-- [ ] Bonecutters static assets are deployed.
+- [x] Bonecutters AWS resources are provisioned for V1 hosting.
+- [x] Bonecutters static assets are deployed to the private origin bucket.
 - [ ] DNS points public hostnames at CloudFront.
 
 ## IAM Guidance
 
 Prefer temporary credentials through IAM roles or IAM Identity Center. Do not create long-lived access keys for this repository unless a future workflow is explicitly approved and documented.
 
-The deployment role should be scoped to Bonecutters resources only:
+Use separate access lanes instead of one broad operator credential:
+
+- Provisioning lane: human-approved setup access for IAM, S3, CloudFront, ACM, and DNS work.
+- Routine deployment lane: human-approved deploy access for static asset upload and CloudFront invalidation only.
+- Optional read-only inspection lane: local AWS Console, AWS Toolkit, or CLI inspection without mutation.
+
+Local AWS profile names belong on the operator machine only. Committed docs should use placeholders such as `<bonecutters-provisioning-profile>`, `<bonecutters-deploy-profile>`, and `<bonecutters-readonly-profile>` when an example needs to name a credential lane.
+
+The routine deployment role should be scoped to Bonecutters resources only:
 
 - read/write deployment assets in the Bonecutters S3 bucket
 - create invalidations for the Bonecutters CloudFront distribution
 - read deployment state only if a future infrastructure tool needs it
 - avoid permissions for SimpleETL resources
 
+The provisioning role or permission set may need broader setup permissions while resources are being created, but it should still be used only for Bonecutters infrastructure and should not mutate SimpleETL resources.
+
+The read-only inspection lane should not be able to create, update, delete, upload, invalidate, or change DNS.
+
 ## Deployment Rules
 
 - Do not add live account IDs, access keys, or secret values to docs, scripts, `.env` files, or examples.
-- Use placeholders for account-specific values in documentation.
+- Do not add live bucket names, CloudFront distribution IDs, hosted zone IDs, ARNs, account aliases, or local AWS profile names to committed docs.
+- Use placeholders for account-specific and machine-local values in documentation.
 - Keep deployment scripts project-local and named for Bonecutters.
 - Treat every AWS, DNS, S3, CloudFront, IAM, and deployment command as human-approved.
 - Run `npm run verify:scoped dependency-layout,public-sanitization,deployment-config,client,docs` before publishing deployment-related changes.

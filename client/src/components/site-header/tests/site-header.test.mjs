@@ -40,7 +40,7 @@ export function registerSiteHeaderTests(test) {
     assert.match(css, /\.site-header__nav\s*\{[^}]*padding-inline:\s*var\(--space-page\)/s);
   });
 
-  test("site header supports sticky scroll state and shrinking brand treatment", () => {
+  test("site header supports stable sticky scroll state and shrinking brand treatment", () => {
     const source = readFileSync(siteHeaderPath, "utf8");
     const css = readFileSync(siteHeaderCssPath, "utf8");
 
@@ -52,8 +52,13 @@ export function registerSiteHeaderTests(test) {
     assert.match(source, /site-header--compact/);
     assert.match(source, /site-header--scrolled/);
     assert.match(css, /position:\s*sticky/);
+    assert.match(css, /min-height:\s*var\(--site-header-expanded-height\)/);
+    assert.match(css, /pointer-events:\s*none/);
     assert.match(css, /top:\s*0/);
-    assert.match(css, /\.site-header--scrolled/);
+    assert.match(css, /\.site-header__nav\s*\{[^}]*pointer-events:\s*auto/s);
+    assert.match(css, /padding-block:\s*0\.625rem/);
+    assert.match(css, /\.site-header__nav::before/);
+    assert.match(css, /\.site-header--scrolled \.site-header__nav::before/);
   });
 
   test("site header exposes a mobile hamburger menu that reuses nav links", () => {

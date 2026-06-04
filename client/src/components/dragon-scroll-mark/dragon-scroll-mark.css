@@ -18,6 +18,10 @@
     overflow: visible;
   }
 
+  .dragon-scroll-mark--static {
+    opacity: 0.32;
+  }
+
   .dragon-scroll-mark__svg {
     display: block;
     height: 100%;
@@ -42,13 +46,15 @@
 }
 
 @media (prefers-reduced-motion: reduce) and (min-width: 1060px) {
+  .dragon-scroll-mark {
+    opacity: 0.32;
+  }
+
   .dragon-scroll-mark__curve {
-    transform: rotate(0deg) scale(1) !important;
     transition: none;
   }
 
   .dragon-scroll-mark__segment {
-    opacity: 1;
     stroke: rgb(93 93 90 / 28%);
     transition: none;
   }
