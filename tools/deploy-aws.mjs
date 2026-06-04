@@ -24,16 +24,7 @@ console.log(`- region: ${region}`);
 console.log(`- remote deletion: ${options.deleteAssets ? "enabled for hashed assets" : "disabled"}`);
 console.log("");
 
-run("aws", [
-  "sts",
-  "get-caller-identity",
-  "--profile",
-  profile,
-  "--region",
-  region,
-  "--output",
-  "json"
-], { summarizeIdentity: true });
+checkDeployIdentity();
 
 run("npm", ["run", "build"]);
 
@@ -122,25 +113,18 @@ function run(command, args, options = {}) {
   const quietAws = options.quietAws === true;
   const result = spawnSync(commandName(command), args, {
     encoding: "utf8",
-    stdio: options.summarizeIdentity || quietAws ? ["ignore", "pipe", "pipe"] : "inherit"
+    shell: process.platform === "win32" && command !== "aws",
+    stdio: quietAws ? ["ignore", "pipe", "pipe"] : "inherit"
   });
 
-  if (options.summarizeIdentity && result.status === 0) {
-    const identity = JSON.parse(result.stdout);
-    const accountMatches = identity.Account === config.accountId;
-
-    if (!accountMatches) {
-      fail("Deploy lane identity check failed: active account does not match local project configuration.");
-    }
-
-    console.log("Deploy lane identity check succeeded.");
-    console.log("- account: matches configured account");
-    console.log(`- arn: ${summarizeArn(identity.Arn)}`);
-    console.log("");
+  if (result.error !== undefined) {
+    process.stderr.write(redact(result.error.message));
+    process.stderr.write("\n");
+    process.exit(1);
   }
 
   if (result.status !== 0) {
-    if (options.summarizeIdentity || quietAws) {
+    if (quietAws) {
       process.stderr.write(redact(result.stderr));
     }
 
@@ -150,6 +134,69 @@ function run(command, args, options = {}) {
   if (quietAws && options.successMessage !== undefined) {
     console.log(options.successMessage);
   }
+}
+
+function checkDeployIdentity() {
+  const identityArgs = [
+    "sts",
+    "get-caller-identity",
+    "--profile",
+    profile,
+    "--region",
+    region,
+    "--output",
+    "json"
+  ];
+
+  const firstAttempt = runForOutput("aws", identityArgs);
+
+  if (firstAttempt.status === 0) {
+    summarizeIdentity(firstAttempt.stdout);
+    return;
+  }
+
+  console.log("Deploy lane session is not active. Starting AWS sign-in for the deploy lane.");
+  run("aws", ["sso", "login", "--profile", profile], { quietAws: false });
+
+  const secondAttempt = runForOutput("aws", identityArgs);
+  if (secondAttempt.status !== 0) {
+    process.stderr.write(redact(secondAttempt.stderr));
+    process.exit(secondAttempt.status ?? 1);
+  }
+
+  summarizeIdentity(secondAttempt.stdout);
+}
+
+function runForOutput(command, args) {
+  const result = spawnSync(commandName(command), args, {
+    encoding: "utf8",
+    shell: process.platform === "win32" && command !== "aws",
+    stdio: ["ignore", "pipe", "pipe"]
+  });
+
+  if (result.error !== undefined) {
+    return {
+      status: 1,
+      stdout: "",
+      stderr: result.error.message
+    };
+  }
+
+  return result;
+}
+
+function summarizeIdentity(stdout) {
+  const identity = JSON.parse(stdout);
+  const accountMatches = identity.Account === config.accountId;
+
+  if (!accountMatches) {
+    fail("Deploy lane identity check failed: active account does not match local project configuration.");
+  }
+
+  console.log("Deploy lane identity check succeeded.");
+  console.log("- account: matches configured account");
+  console.log(`- arn: ${summarizeArn(identity.Arn)}`);
+  console.log("");
 }
 
 function requireString(value, label) {

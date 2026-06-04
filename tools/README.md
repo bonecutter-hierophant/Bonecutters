@@ -24,7 +24,7 @@ npm run deploy:aws
 
 The helper reads `.local/aws-project.json`, which is ignored by Git. Do not commit that file, live AWS profile names, account IDs, bucket names, distribution IDs, or ARNs.
 
-`npm run deploy:aws` uses the configured deploy lane to build, upload, and invalidate the live static site. It remains human-approved because it mutates AWS resources.
+`npm run deploy:aws` uses the configured deploy lane to build, upload, and invalidate the live static site. It remains human-approved because it mutates AWS resources. If the deploy profile session is expired, it starts the normal AWS sign-in flow and retries the identity check before uploading or invalidating.
 
 By default the deployment command does not delete remote assets. Use `npm run deploy:aws -- --delete-assets` only when intentionally removing replaced hashed assets from the private origin bucket.
 
