@@ -10,6 +10,7 @@ component "SiteFooter" as SiteFooter
 component "DragonScrollMark" as DragonScrollMark
 component "Web Awesome Buttons" as WebAwesomeButtons
 cloud "LinkedIn Profile" as LinkedIn
+cloud "GitHub Profile" as GitHub
 cloud "SimpleETL" as SimpleETL
 cloud "CatapultCMS" as CatapultCMS
 cloud "Idea Fab Labs" as IdeaFabLabs
@@ -22,6 +23,7 @@ HomePage --> DragonScrollMark : decorative scroll visual
 HomePage --> SiteFooter : persistent footer
 HomePage --> WebAwesomeButtons : primary link primitives
 HomePage --> LinkedIn : profile link
+HomePage --> GitHub : profile link
 HomePage --> SimpleETL : project link
 HomePage --> CatapultCMS : work link
 HomePage --> IdeaFabLabs : work link

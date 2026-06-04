@@ -34,6 +34,9 @@ export function registerHomePageTests(test) {
 
     assert.match(source, /id="work"/);
     assert.match(source, /SimpleETL/);
+    assert.match(source, /github\.com\/bonecutter-hierophant/);
+    assert.match(source, /easier to work through/);
+    assert.doesNotMatch(source, /easier to reason about/);
     assert.match(source, /CatapultCMS/);
     assert.match(source, /Idea Fab Labs/);
     assert.match(source, /Tron, Tokens, and the Grid/);

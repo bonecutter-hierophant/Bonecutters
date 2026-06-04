@@ -9,7 +9,7 @@ const workItems = [
     title: "SimpleETL",
     href: "https://simpleetl.bonecutters.us/",
     description: [
-      "SimpleETL is an independent software project focused on making structured data movement and transformation easier to reason about.",
+      "SimpleETL is an independent software project focused on making structured data movement and transformation easier to work through.",
       "The project is early-stage, but it reflects the kind of system I like to build: practical, understandable, and oriented around the work people actually need to do.",
       "It is also a useful public example of how I organize product thinking, implementation, documentation, and validation around a software project.",
     ],
@@ -57,6 +57,9 @@ export function HomePage() {
           <WaButtonGroup className="home-page__actions" aria-label="Primary links">
             <WaButton href="https://www.linkedin.com/in/jediah-blankenship/" target="_blank" rel="noreferrer">
               LinkedIn
+            </WaButton>
+            <WaButton href="https://github.com/bonecutter-hierophant" target="_blank" rel="noreferrer">
+              GitHub
             </WaButton>
             <WaButton href="https://simpleetl.bonecutters.us/" target="_blank" rel="noreferrer">
               SimpleETL
