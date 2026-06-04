@@ -24,13 +24,13 @@ Bonecutters should be deployed as its own isolated static-site workload inside t
 
 ## Current Deployment State
 
-As of this document state, the Bonecutters website AWS account contains a project-specific private S3 origin bucket, issued ACM certificate, CloudFront Origin Access Control, CloudFront distribution, and first uploaded static build. DNS cutover has not been completed yet. The repository contains public-safe deployment documentation and local validation only.
+As of this document state, V1 is live. The Bonecutters website AWS account contains a project-specific private S3 origin bucket, issued ACM certificate, CloudFront Origin Access Control, CloudFront distribution, and deployed static build. The canonical `www` host is served through CloudFront, and the root domain forwards to the canonical host.
 
 - [x] Local deployment documentation exists.
 - [x] Local deployment configuration validation exists.
 - [x] Bonecutters AWS resources are provisioned for V1 hosting.
 - [x] Bonecutters static assets are deployed to the private origin bucket.
-- [ ] DNS points public hostnames at CloudFront.
+- [x] Public DNS and forwarding route visitors to the CloudFront-backed site.
 
 ## IAM Guidance
 

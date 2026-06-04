@@ -12,10 +12,10 @@ The site is intentionally small: a Vite/React client that builds to static files
 - [x] Bonecutters S3 bucket created
 - [x] CloudFront distribution created
 - [x] ACM certificate configured
-- [ ] DNS pointed at CloudFront
-- [ ] Public deployment live
+- [x] DNS configured for public launch
+- [x] Public deployment live
 
-The Bonecutters website AWS account now contains a project-specific private S3 origin bucket, issued ACM certificate, CloudFront Origin Access Control, CloudFront distribution, and first uploaded static build. DNS cutover has not been completed yet.
+V1 is live at `www.bonecutters.us`. The root domain forwards to the canonical `www` host, which is served through CloudFront from a private S3 origin.
 
 ## Structure
 
@@ -115,6 +115,6 @@ This repository is public. Do not commit secrets, private AWS account details, l
 
 Deployment should use Bonecutters-specific AWS resources and a Bonecutters-scoped deployment role. Do not reuse SimpleETL buckets, distributions, IAM roles, policies, or deployment scripts.
 
-## Go-Live Checklist
+## Live Site
 
-The deployment checklist lives in `docs/deployment/README.md`. The final production step is pointing DNS for the public hostnames at the CloudFront distribution after the S3 origin, CloudFront configuration, TLS certificate, deployment validation, and first asset upload are complete.
+The deployment checklist lives in `docs/deployment/README.md`. Future deployments should build the static client, upload `client/dist` through the approved AWS access lane, and invalidate CloudFront entry/root assets.

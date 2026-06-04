@@ -6,9 +6,9 @@ Local diagram: `s3-cloudfront-hosting.puml`.
 
 ## Current State
 
-The site is not online yet.
+V1 is live at `www.bonecutters.us`. The root domain forwards to the canonical `www` host.
 
-Completed locally:
+Completed for V1:
 
 - [x] Launch-ready static client content
 - [x] S3 and CloudFront hosting proposal
@@ -25,7 +25,8 @@ Completed locally:
 
 Not completed yet:
 
-- [ ] DNS pointing `www.bonecutters.us` or `bonecutters.us` at CloudFront
+- [ ] Create a narrower routine deployment role or permission set for future deploys.
+- [ ] Move root-domain DNS to an apex alias provider if direct CloudFront-backed root hosting becomes preferable to registrar forwarding.
 
 ## V1 Hosting Shape
 
@@ -34,7 +35,7 @@ Bonecutters builds `client/dist` and hosts it through a private S3 origin behind
 Public hosts:
 
 - `www.bonecutters.us`: canonical site host
-- `bonecutters.us`: root host redirected to `www.bonecutters.us`
+- `bonecutters.us`: root host forwarded to `www.bonecutters.us`
 
 AWS resource values stay out of the repository. Use placeholders in docs and local environment variables for real deployment values.
 
@@ -148,4 +149,6 @@ Use this checklist when moving from local readiness to a real hosted site. AWS a
 - [x] Create a CloudFront invalidation for `/`, `/index.html`, and changed non-hashed root assets after the distribution is deployed.
 - [x] Test the CloudFront distribution URL directly.
 - [x] Test `403` and `404` behavior so missing assets are not silently treated as successful page loads.
-- [ ] Point DNS for `www.bonecutters.us` and `bonecutters.us` at CloudFront to make the site live.
+- [x] Point `www.bonecutters.us` at CloudFront.
+- [x] Configure root-domain forwarding to the canonical `www` host.
+- [x] Confirm the public site is live.
