@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { spawnSync } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { extname, join, resolve } from "node:path";
 
 const configPath = resolve(process.cwd(), ".local", "aws-project.json");
 const config = loadConfig();
@@ -17,6 +17,7 @@ const profile = deployLane.profile;
 const region = deployLane.region ?? config.workloadRegion;
 const bucket = config.resources.s3Bucket;
 const distributionId = config.resources.cloudFrontDistributionId;
+const distRoot = resolve(process.cwd(), "client", "dist");
 
 console.log("Deploying Bonecutters website through the configured deploy lane.");
 console.log("- lane: deploy");
@@ -45,18 +46,7 @@ if (options.deleteAssets) {
 
 run("aws", syncArgs, { quietAws: true, successMessage: "Hashed assets uploaded." });
 
-run("aws", [
-  "s3",
-  "cp",
-  "client/dist/bonecutters-logo.svg",
-  `s3://${bucket}/bonecutters-logo.svg`,
-  "--profile",
-  profile,
-  "--cache-control",
-  "public,max-age=3600",
-  "--content-type",
-  "image/svg+xml"
-], { quietAws: true, successMessage: "Root logo asset uploaded." });
+const rootAssetPaths = uploadRootAssets();
 
 run("aws", [
   "s3",
@@ -81,7 +71,7 @@ run("aws", [
   "--paths",
   "/",
   "/index.html",
-  "/bonecutters-logo.svg",
+  ...rootAssetPaths.map((assetPath) => `/${assetPath}`),
   "--query",
   "Invalidation.Status",
   "--output",
@@ -134,6 +124,49 @@ function run(command, args, options = {}) {
   if (quietAws && options.successMessage !== undefined) {
     console.log(options.successMessage);
   }
+}
+
+function uploadRootAssets() {
+  const rootAssets = readdirSync(distRoot)
+    .filter((entry) => entry !== "index.html")
+    .filter((entry) => statSync(join(distRoot, entry)).isFile())
+    .sort();
+
+  for (const assetPath of rootAssets) {
+    run("aws", [
+      "s3",
+      "cp",
+      join("client", "dist", assetPath),
+      `s3://${bucket}/${assetPath}`,
+      "--profile",
+      profile,
+      "--cache-control",
+      "public,max-age=3600",
+      "--content-type",
+      contentTypeFor(assetPath)
+    ], { quietAws: true });
+  }
+
+  console.log(`Root asset${rootAssets.length === 1 ? "" : "s"} uploaded: ${rootAssets.join(", ")}`);
+
+  return rootAssets;
+}
+
+function contentTypeFor(filePath) {
+  const extension = extname(filePath).toLowerCase();
+  const contentTypes = new Map([
+    [".css", "text/css; charset=utf-8"],
+    [".html", "text/html; charset=utf-8"],
+    [".ico", "image/x-icon"],
+    [".jpg", "image/jpeg"],
+    [".jpeg", "image/jpeg"],
+    [".js", "text/javascript; charset=utf-8"],
+    [".png", "image/png"],
+    [".svg", "image/svg+xml"],
+    [".webp", "image/webp"]
+  ]);
+
+  return contentTypes.get(extension) ?? "application/octet-stream";
 }
 
 function checkDeployIdentity() {

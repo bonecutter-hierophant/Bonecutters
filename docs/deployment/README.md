@@ -119,7 +119,7 @@ Do not paste local helper output that includes live AWS values into public docs,
 
 `npm run aws:lane -- <lane> deploy-env` prints placeholder values by default. Use `--show-values` only in a local terminal when you intentionally need shell assignments with real values.
 
-`npm run deploy:aws` is the normal human-approved deployment lane. It uses the configured deploy profile from `.local/aws-project.json`, confirms that the active account matches local project configuration, builds the static client, uploads `client/dist`, and invalidates CloudFront entry/root assets. If the deploy profile session is expired, the helper starts the normal AWS sign-in flow for the deploy profile and retries the identity check before mutating AWS resources.
+`npm run deploy:aws` is the normal human-approved deployment lane. It uses the configured deploy profile from `.local/aws-project.json`, confirms that the active account matches local project configuration, builds the static client, uploads `client/dist`, publishes root public assets such as the logo and favicon, and invalidates CloudFront entry/root assets. If the deploy profile session is expired, the helper starts the normal AWS sign-in flow for the deploy profile and retries the identity check before mutating AWS resources.
 
 Remote deletion is disabled by default. Use `npm run deploy:aws -- --delete-assets` only when intentionally removing replaced hashed assets from the private origin bucket.
 
