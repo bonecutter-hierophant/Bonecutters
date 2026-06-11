@@ -18,10 +18,11 @@ The safe lane runs:
 - `public-sanitization`
 - `test`
 - `deployment-config`
+- `client:static`
 - `client:typecheck`
 - `docs`
 
-These gates avoid registry access, deployment access, Git subprocess requirements, and Vite/esbuild production bundling.
+These gates avoid registry access, deployment access, Git subprocess requirements, and Vite/esbuild production bundling. The `client:static` gate checks the browser entry HTML and public asset references with Node filesystem reads so favicon and metadata changes can be verified without starting the Vite build pipeline.
 
 Use `verify:safe` as the default unattended verification lane.
 

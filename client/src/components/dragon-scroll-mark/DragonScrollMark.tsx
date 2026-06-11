@@ -89,12 +89,12 @@ export function DragonScrollMark({ finishSectionId = "name" }: DragonScrollMarkP
   const targetY = 56 - markProgress * 71;
   const transform = `translate(${targetX} ${targetY}) rotate(${rotation}) scale(${scale}) translate(${-anchor.x1} ${-anchor.y1})`;
   const frameSize = 250 + markProgress * 170;
+  const viewBoxOrigin = -frameSize / 2;
 
   return (
     <aside
       className={[
         "dragon-scroll-mark",
-        markProgress > 0.78 ? "dragon-scroll-mark--unclipped" : "",
         prefersReducedMotion ? "dragon-scroll-mark--static" : "",
       ].filter(Boolean).join(" ")}
       aria-hidden="true"
@@ -103,7 +103,7 @@ export function DragonScrollMark({ finishSectionId = "name" }: DragonScrollMarkP
         width: `${frameSize}px`,
       }}
     >
-      <svg className="dragon-scroll-mark__svg" viewBox="-125 -125 250 250" role="presentation">
+      <svg className="dragon-scroll-mark__svg" viewBox={`${viewBoxOrigin} ${viewBoxOrigin} ${frameSize} ${frameSize}`} role="presentation">
         <g className="dragon-scroll-mark__curve" transform={transform}>
           {segments.map((segment, index) => (
             <line

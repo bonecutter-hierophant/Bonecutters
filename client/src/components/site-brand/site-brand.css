@@ -7,7 +7,7 @@
 
 .site-brand__logo {
   display: block;
-  height: 8.5rem;
+  height: clamp(4.75rem, 10vw, 8.5rem);
   transition: height 180ms ease;
   width: auto;
 }

@@ -10,6 +10,7 @@ Responsibilities:
 - render the approved Bonecutters SVG logo as a decorative mark
 - keep the logo and text together
 - avoid embedding page-specific layout behavior
+- scale the wide logo within header breakpoints so the public header does not overflow
 
 Inputs:
 

@@ -57,8 +57,12 @@ export function registerSiteHeaderTests(test) {
     assert.match(css, /top:\s*0/);
     assert.match(css, /\.site-header__nav\s*\{[^}]*pointer-events:\s*auto/s);
     assert.match(css, /padding-block:\s*0\.625rem/);
-    assert.match(css, /\.site-header__nav::before/);
-    assert.match(css, /\.site-header--scrolled \.site-header__nav::before/);
+    assert.match(css, /\.site-header::before/);
+    assert.match(css, /inset:\s*0/);
+    assert.doesNotMatch(css, /width:\s*100vw/);
+    assert.doesNotMatch(css, /50dvw/);
+    assert.doesNotMatch(css, /translateX\(-50%\)/);
+    assert.match(css, /\.site-header--scrolled::before/);
   });
 
   test("site header exposes a mobile hamburger menu that reuses nav links", () => {
@@ -70,6 +74,7 @@ export function registerSiteHeaderTests(test) {
     assert.match(source, /aria-label="Toggle navigation menu"/);
     assert.match(source, /data-open=\{isMenuOpen\}/);
     assert.match(source, /onClick=\{\(\) => setIsMenuOpen\(false\)\}/);
+    assert.match(css, /@media \(max-width:\s*760px\)/);
     assert.match(css, /\.site-header__menu-button/);
     assert.match(css, /\.site-header__links\[data-open="true"\]/);
   });

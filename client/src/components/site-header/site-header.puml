@@ -9,6 +9,7 @@ component "SiteBrand" as SiteBrand
 component "HomePage" as HomePage
 component "Shared scroll threshold" as ScrollState
 component "Mobile menu state" as MenuState
+component "Full-bleed header band" as HeaderBand
 rectangle "Home Page Sections" as Sections {
   component "#about" as About
   component "#work" as Work
@@ -21,6 +22,7 @@ HomePage --> SiteHeader : renders public header
 SiteHeader --> SiteBrand : brand link
 SiteHeader --> ScrollState : shrinks logo and toggles chrome
 SiteHeader --> MenuState : opens and closes menu
+SiteHeader --> HeaderBand : paints full-width chrome
 SiteHeader --> Styles : class contract
 SiteHeader --> About : anchor link
 SiteHeader --> Work : anchor link

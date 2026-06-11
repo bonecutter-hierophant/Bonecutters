@@ -10,7 +10,7 @@ Responsibilities:
 - render the curve as individual line segments inside a clipped frame
 - reveal segments as users scroll
 - scale, rotate, and translate the curve within the fixed frame
-- expand the clipping frame as the completed curve needs more room
+- expand the clipping frame and SVG viewBox as the completed curve needs more room
 - start zoomed into the curve origin and finish near the page section about the name
 - start rotated so the first visible segment reads as a downward cue
 - stay absent below `1060px` viewports
@@ -32,6 +32,7 @@ Contract rules:
 - do not add external animation dependencies for this experiment
 - do not expose public copy or interactive controls
 - keep the frame clipped and bounded
+- do not use visible overflow for the fixed decorative frame
 - keep the animation hidden below `1060px`
 - pass the page-owned finish section id from the page that composes the component
 - keep strokes thin with non-scaling vector strokes

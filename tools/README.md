@@ -7,6 +7,7 @@ Local diagram: `tools.puml`.
 ## Responsibilities
 
 - run deterministic verification gates
+- check static client HTML and public asset contracts without invoking Vite
 - keep client tests linked through a stable public command
 - validate deployment configuration shape without contacting AWS
 - provide a public-safe AWS lane helper that reads real local values from ignored `.local/` files

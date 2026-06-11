@@ -42,7 +42,10 @@ export function registerDragonScrollMarkTests(test) {
     assert.match(source, /const rotation = 135 \+ rotationProgress \* 180/);
     assert.match(source, /translate\(\$\{targetX\} \$\{targetY\}\) rotate/);
     assert.match(source, /const frameSize = 250 \+ markProgress \* 170/);
-    assert.match(source, /markProgress > 0\.78/);
+    assert.match(source, /const viewBoxOrigin = -frameSize \/ 2/);
+    assert.match(source, /viewBox=\{`\$\{viewBoxOrigin\} \$\{viewBoxOrigin\} \$\{frameSize\} \$\{frameSize\}`\}/);
+    assert.doesNotMatch(source, /markProgress > 0\.78/);
+    assert.doesNotMatch(source, /dragon-scroll-mark--unclipped/);
     assert.match(source, /const targetY = 56 - markProgress \* 71/);
     assert.match(source, /dragon-scroll-mark--static/);
     assert.match(source, /height:\s*`\$\{frameSize\}px`/);
@@ -57,8 +60,8 @@ export function registerDragonScrollMarkTests(test) {
     assert.match(css, /\.dragon-scroll-mark\s*\{[^}]*display:\s*none/s);
     assert.match(css, /@media \(min-width:\s*1060px\)/);
     assert.match(css, /overflow:\s*hidden/);
-    assert.match(css, /\.dragon-scroll-mark--unclipped\s*\{[^}]*overflow:\s*visible/s);
-    assert.match(css, /\.dragon-scroll-mark--unclipped \.dragon-scroll-mark__svg\s*\{[^}]*overflow:\s*visible/s);
+    assert.doesNotMatch(css, /overflow:\s*visible/);
+    assert.doesNotMatch(css, /dragon-scroll-mark--unclipped/);
     assert.match(css, /inset-block-start:\s*calc\(min\(58vh,\s*34rem\) - 130px\)/);
     assert.match(css, /inset-inline-end:\s*max\(0\.75rem,\s*calc\(\(100vw - var\(--site-max-width\)\) \/ 2 \+ var\(--space-page\) - 75px\)\)/);
     assert.match(css, /transition:\s*opacity 120ms linear/);

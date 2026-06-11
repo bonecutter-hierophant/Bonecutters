@@ -10,6 +10,7 @@
     "verify:dependency-layout": "node tools/check-dependency-layout.mjs",
     "verify:public-sanitization": "node tools/check-public-sanitization.mjs",
     "verify:test": "node tools/test-client.mjs",
+    "verify:client:static": "node tools/check-client-static-contract.mjs",
     "verify:client:typecheck": "npm --prefix client run typecheck",
     "verify:client": "npm --prefix client run build",
     "verify:docs": "node tools/check-docs-whitespace.mjs",

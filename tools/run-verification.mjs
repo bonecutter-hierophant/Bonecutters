@@ -11,6 +11,7 @@ const gateDefinitions = new Map([
   ["public-sanitization", ["node", ["tools/check-public-sanitization.mjs"]]],
   ["test", ["node", ["tools/test-client.mjs"]]],
   ["deployment-config", ["node", ["tools/test-deployment-config.mjs"]]],
+  ["client:static", ["node", ["tools/check-client-static-contract.mjs"]]],
   ["docs", ["node", ["tools/check-docs-whitespace.mjs"]]],
   ["client:typecheck", ["npm", ["--prefix", "client", "run", "typecheck"]]],
   ["client", ["npm", ["--prefix", "client", "run", "build"]]]
@@ -18,7 +19,7 @@ const gateDefinitions = new Map([
 
 const presets = new Map([
   ["docs", ["dependency-layout", "public-sanitization", "docs"]],
-  ["safe", ["dependency-layout", "public-sanitization", "test", "deployment-config", "client:typecheck", "docs"]],
+  ["safe", ["dependency-layout", "public-sanitization", "test", "deployment-config", "client:static", "client:typecheck", "docs"]],
   ["client", ["dependency-layout", "public-sanitization", "test", "deployment-config", "client", "docs"]],
   ["review", ["dependency-layout", "public-sanitization", "test", "deployment-config", "client", "docs"]]
 ]);

@@ -11,8 +11,9 @@ Responsibilities:
 - compose the reusable `SiteBrand`
 - expose the launch page section anchors
 - stay available at the top of the viewport while scrolling
-- expose a mobile hamburger menu with the same section anchors
+- expose a mobile and tablet hamburger menu with the same section anchors
 - compact the visible brand mark and apply scrolled header chrome at the same scroll threshold
+- draw the full-bleed header background band without introducing horizontal page overflow
 
 Inputs:
 
@@ -36,6 +37,7 @@ Contract rules:
 - the outer sticky header reserves the expanded header height while the inner nav owns the visible background band
 - scroll state should not change the sticky header's layout height
 - scroll state should only affect header presentation, not page routing
+- full-bleed header chrome should be painted by the full-width sticky header, not by viewport-width sizing inside the constrained nav
 
 Verification:
 

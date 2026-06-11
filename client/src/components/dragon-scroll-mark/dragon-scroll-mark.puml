@@ -9,12 +9,14 @@ component "tests/dragon-scroll-mark.test.mjs" as Tests
 component "HomePage" as HomePage
 component "Media query state" as MediaQuery
 component "requestAnimationFrame" as AnimationFrame
+component "Bounded SVG viewBox" as ViewBox
 
 HomePage --> Component : renders decorative mark
 HomePage --> Component : finishSectionId
 Component --> Geometry : generates curve segments
 Component --> MediaQuery : desktop and reduced-motion guards
 Component --> AnimationFrame : coalesces scroll updates
+Component --> ViewBox : expands clipped coordinate frame
 Component --> Styles : clipped desktop frame
 Tests --> Geometry : verifies segment counts
 Tests --> Component : verifies accessibility contract

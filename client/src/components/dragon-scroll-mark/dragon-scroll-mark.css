@@ -14,10 +14,6 @@
     z-index: 1;
   }
 
-  .dragon-scroll-mark--unclipped {
-    overflow: visible;
-  }
-
   .dragon-scroll-mark--static {
     opacity: 0.32;
   }
@@ -26,10 +22,6 @@
     display: block;
     height: 100%;
     width: 100%;
-  }
-
-  .dragon-scroll-mark--unclipped .dragon-scroll-mark__svg {
-    overflow: visible;
   }
 
   .dragon-scroll-mark__curve {

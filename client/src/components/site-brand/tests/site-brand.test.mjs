@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const siteBrandPath = fileURLToPath(new URL("../SiteBrand.tsx", import.meta.url));
+const siteBrandCssPath = fileURLToPath(new URL("../site-brand.css", import.meta.url));
 const logoPath = fileURLToPath(new URL("../../../../public/bonecutters-logo.svg", import.meta.url));
 
 export function registerSiteBrandTests(test) {
@@ -23,5 +24,12 @@ export function registerSiteBrandTests(test) {
     assert.match(source, /href="\/"/);
     assert.match(source, /aria-label="Bonecutters home"/);
     assert.match(source, /Bonecutters/);
+  });
+
+  test("site brand scales the wide logo within header breakpoints", () => {
+    const css = readFileSync(siteBrandCssPath, "utf8");
+
+    assert.match(css, /height:\s*clamp\(4\.75rem,\s*10vw,\s*8\.5rem\)/);
+    assert.match(css, /width:\s*auto/);
   });
 }
