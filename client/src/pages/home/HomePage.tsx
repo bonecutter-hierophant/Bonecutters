@@ -133,6 +133,20 @@ export function HomePage() {
           >
             Read on LinkedIn
           </a>
+          <h2 className="home-page__writing-title">README.md - Where Am I?</h2>
+          <p>
+            This piece uses an amnesiac RPG hero as a metaphor for coding agents entering
+            unfamiliar projects, and explores how branches, proposals, documentation, workflows,
+            and tests provide the layered context they need to navigate and work effectively.
+          </p>
+          <a
+            className="home-page__text-link"
+            href="https://www.linkedin.com/pulse/readmemd-where-am-i-jediah-blankenship-skswc/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Read on LinkedIn
+          </a>
         </div>
       </section>
 

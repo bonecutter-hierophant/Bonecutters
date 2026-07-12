@@ -11,7 +11,7 @@ Responsibilities:
 - render About, Selected Work, Writing, About the Name, and Contact sections
 - compose the experimental desktop-only dragon scroll mark
 - expose LinkedIn, GitHub, SimpleETL, and email links
-- expose CatapultCMS, Idea Fab Labs, and writing links
+- expose CatapultCMS, Idea Fab Labs, and LinkedIn writing links
 - keep the site professional and public-repository safe
 - keep section backgrounds full bleed while content containers are capped for wide desktop viewports
 - delegate branded navigation to `SiteHeader`
@@ -28,7 +28,7 @@ Inputs:
 - SimpleETL URL
 - CatapultCMS URL
 - Idea Fab Labs URL
-- LinkedIn article URL
+- LinkedIn article URLs
 - contact mailto URL
 
 Outputs:

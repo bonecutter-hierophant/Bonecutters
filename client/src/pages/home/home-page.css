@@ -94,7 +94,7 @@
   letter-spacing: 0;
   line-height: 1.08;
   margin: 0;
-  max-width: 48rem;
+  max-width: 50rem;
 }
 
 .home-page__section h3 {
@@ -136,6 +136,10 @@
   margin-top: 1.2rem;
   text-decoration: underline;
   text-underline-offset: 0.25em;
+}
+
+.home-page__section .home-page__writing-title {
+  margin-top: 3rem;
 }
 
 @media (min-width: 920px) {

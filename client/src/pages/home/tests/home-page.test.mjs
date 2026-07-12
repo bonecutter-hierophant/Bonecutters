@@ -40,6 +40,8 @@ export function registerHomePageTests(test) {
     assert.match(source, /CatapultCMS/);
     assert.match(source, /Idea Fab Labs/);
     assert.match(source, /Tron, Tokens, and the Grid/);
+    assert.match(source, /README\.md - Where Am I\?/);
+    assert.match(source, /readmemd-where-am-i-jediah-blankenship-skswc/);
     assert.match(source, /id="name"/);
     assert.match(source, /jediah@bonecutters\.us/);
   });

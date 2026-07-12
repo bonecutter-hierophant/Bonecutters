@@ -14,7 +14,7 @@ cloud "GitHub Profile" as GitHub
 cloud "SimpleETL" as SimpleETL
 cloud "CatapultCMS" as CatapultCMS
 cloud "Idea Fab Labs" as IdeaFabLabs
-cloud "LinkedIn Article" as Writing
+cloud "LinkedIn Articles" as Writing
 cloud "Email Contact" as Email
 
 HomePage --> Styles : page class contract
@@ -27,7 +27,7 @@ HomePage --> GitHub : profile link
 HomePage --> SimpleETL : project link
 HomePage --> CatapultCMS : work link
 HomePage --> IdeaFabLabs : work link
-HomePage --> Writing : article link
+HomePage --> Writing : article links
 HomePage --> Email : contact CTA
 Tests --> HomePage : verifies content and safety contract
 
